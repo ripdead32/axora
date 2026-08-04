@@ -8,49 +8,127 @@
 
 <style>
 
-body{
 
-margin:0;
+*{
 
-font-family:Arial;
-
-background:#090014;
-
-color:white;
-
-text-align:center;
+box-sizing:border-box;
 
 }
 
 
+
+body{
+
+margin:0;
+
+font-family:Arial,sans-serif;
+
+background:
+linear-gradient(
+135deg,
+#090014,
+#15102b
+);
+
+color:white;
+
+min-height:100vh;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+}
+
+
+
+/* Back button */
+
+
+.back{
+
+position:absolute;
+
+top:25px;
+
+left:25px;
+
+padding:12px 22px;
+
+border:none;
+
+border-radius:12px;
+
+background:#22223a;
+
+color:white;
+
+cursor:pointer;
+
+transition:.25s;
+
+}
+
+
+
+.back:hover{
+
+transform:translateX(-5px);
+
+box-shadow:
+0 10px 30px #7c5cff55;
+
+}
+
+
+
+
 .box{
 
-margin:100px auto;
 
-background:#1e1e32;
+width:400px;
 
 padding:40px;
 
 border-radius:20px;
 
-width:400px;
+background:#1e1e32;
+
+text-align:center;
+
 
 }
 
 
+
+
+h1{
+
+color:#8b6cff;
+
+}
+
+
+
 input{
+
+width:90%;
 
 padding:12px;
 
-border-radius:10px;
-
 border:none;
+
+border-radius:10px;
 
 }
 
 
 
 button{
+
+margin-top:15px;
 
 padding:12px 25px;
 
@@ -64,7 +142,28 @@ color:white;
 
 cursor:pointer;
 
+transition:.25s;
+
 }
+
+
+
+button:hover{
+
+transform:translateY(-3px);
+
+}
+
+
+
+#message{
+
+color:#aaa;
+
+margin-top:15px;
+
+}
+
 
 
 </style>
@@ -73,6 +172,17 @@ cursor:pointer;
 
 
 <body>
+
+
+
+<button class="back" onclick="goBack()">
+
+← Back
+
+</button>
+
+
+
 
 
 <div class="box">
@@ -88,7 +198,7 @@ cursor:pointer;
 
 <h2>
 
-Balance:
+Balance
 
 </h2>
 
@@ -116,7 +226,7 @@ placeholder="Enter code">
 
 
 
-<br><br>
+<br>
 
 
 
@@ -141,15 +251,27 @@ Redeem
 <script>
 
 
+function goBack(){
+
+    window.location.href="../";
+
+}
+
+
+
+
 let axbux =
-Number(localStorage.getItem("axbux") || 0);
+Number(
+localStorage.getItem("axbux")
+|| 0
+);
 
 
 
 document
 .getElementById("balance")
 .innerText =
-axbux + " AxBux";
+axbux+" AxBux";
 
 
 
@@ -177,8 +299,13 @@ await response.json();
 
 let promo =
 data.codes.find(
-x=>x.code==code
+x=>x.code===code
 );
+
+
+
+let message =
+document.getElementById("message");
 
 
 
@@ -186,12 +313,13 @@ if(!promo || !promo.active){
 
 
 message.innerText=
-"Invalid code";
+"Invalid code.";
 
 return;
 
 
 }
+
 
 
 
@@ -208,13 +336,14 @@ if(claimed.includes(code)){
 
 
 message.innerText=
-"Already redeemed";
-
+"Already redeemed.";
 
 return;
 
 
 }
+
+
 
 
 
@@ -247,16 +376,18 @@ axbux+" AxBux";
 
 
 
-document
-.getElementById("message")
-.innerText =
-"Received "+promo.reward+" AxBux!";
+message.innerText =
+"Received "
++promo.reward+
+" AxBux!";
 
 
 }
 
 
+
 </script>
+
 
 
 </body>

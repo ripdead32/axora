@@ -7,68 +7,185 @@
 
 <style>
 
+*{
+    box-sizing:border-box;
+}
+
+
 body{
 
-margin:0;
+    margin:0;
 
-height:100vh;
+    height:100vh;
 
-display:flex;
+    display:flex;
 
-align-items:center;
+    justify-content:center;
 
-justify-content:center;
+    align-items:center;
 
-background:#090014;
+    font-family:Arial,sans-serif;
 
-color:white;
+    color:white;
 
-font-family:Arial;
+    background:
+    linear-gradient(
+        135deg,
+        #090014,
+        #15102b,
+        #090014
+    );
 
 }
 
+
+/* Back button */
+
+.back{
+
+    position:absolute;
+
+    top:25px;
+
+    left:25px;
+
+    padding:12px 22px;
+
+    border:none;
+
+    border-radius:12px;
+
+    background:#22223a;
+
+    color:white;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+}
+
+
+
+.back:hover{
+
+    transform:translateX(-5px);
+
+    box-shadow:
+    0 10px 30px #7c5cff55;
+
+}
+
+
+
+/* Login box */
 
 .box{
 
-background:#1e1e32;
+    width:380px;
 
-padding:40px;
+    padding:40px;
 
-border-radius:20px;
+    text-align:center;
 
-text-align:center;
+    border-radius:20px;
+
+    background:#1e1e32;
+
+    animation:fade .8s;
 
 }
+
+
+
+.logo{
+
+    font-size:45px;
+
+    font-weight:900;
+
+    color:#8b6cff;
+
+}
+
 
 
 input{
 
-padding:12px;
+    width:90%;
 
-border:none;
+    padding:13px;
 
-border-radius:10px;
+    margin-top:20px;
+
+    border:none;
+
+    border-radius:10px;
 
 }
+
 
 
 button{
 
-margin-top:20px;
+    margin-top:20px;
 
-padding:12px 30px;
+    padding:13px 35px;
 
-background:#7c5cff;
+    border:none;
 
-color:white;
+    border-radius:12px;
 
-border:none;
+    background:#7c5cff;
 
-border-radius:10px;
+    color:white;
 
-cursor:pointer;
+    cursor:pointer;
+
+    transition:.25s;
 
 }
+
+
+
+button:hover{
+
+    transform:translateY(-3px);
+
+}
+
+
+
+.message{
+
+    color:#aaa;
+
+    margin-top:15px;
+
+}
+
+
+
+@keyframes fade{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(40px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:none;
+
+    }
+
+}
+
 
 </style>
 
@@ -78,14 +195,31 @@ cursor:pointer;
 <body>
 
 
+
+<button class="back" onclick="goBack()">
+
+← Back
+
+</button>
+
+
+
+
 <div class="box">
 
 
-<h1>
+<div class="logo">
 
-Axora Login
+Axora
 
-</h1>
+</div>
+
+
+<h2>
+
+Login
+
+</h2>
 
 
 
@@ -106,12 +240,28 @@ Continue
 </button>
 
 
+
+<div class="message" id="message"></div>
+
+
+
 </div>
 
 
 
 
+
+
 <script>
+
+
+function goBack(){
+
+    window.location.href="../";
+
+}
+
+
 
 
 function login(){
@@ -125,8 +275,19 @@ document
 
 
 
-if(username=="")
+if(username==""){
+
+
+document
+.getElementById("message")
+.innerText=
+"Please enter a username.";
+
+
 return;
+
+
+}
 
 
 
@@ -136,10 +297,12 @@ localStorage.setItem(
 );
 
 
+
 localStorage.setItem(
 "username",
 username
 );
+
 
 
 if(!localStorage.getItem("axbux")){
@@ -160,6 +323,7 @@ window.location.href="../";
 
 
 </script>
+
 
 
 </body>
