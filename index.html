@@ -7,298 +7,183 @@
 
 <style>
 
-* {
-    box-sizing:border-box;
+*{
+box-sizing:border-box;
 }
 
+body{
 
-body {
+margin:0;
+font-family:Arial,sans-serif;
+color:white;
 
-    margin:0;
+background:
+linear-gradient(
+135deg,
+#090014,
+#15102b,
+#090014
+);
 
-    font-family:Arial,sans-serif;
-
-    color:white;
-
-    background:
-    linear-gradient(
-        135deg,
-        #090014,
-        #15102b,
-        #090014
-    );
-
-    min-height:100vh;
-
-    overflow-x:hidden;
+min-height:100vh;
 
 }
 
 
+nav{
 
-body::before {
+display:flex;
+align-items:center;
 
-    content:"";
+padding:20px 50px;
 
-    position:fixed;
+background:
+rgba(20,20,35,.7);
 
-    width:500px;
-    height:500px;
-
-    background:#7c5cff;
-
-    filter:blur(180px);
-
-    top:-150px;
-    left:-150px;
-
-    animation:float 8s infinite alternate;
+backdrop-filter:blur(15px);
 
 }
 
 
+.logo{
 
-@keyframes float {
+font-size:42px;
+font-weight:900;
 
-    from {
-        transform:translate(0,0);
-    }
+color:#8b6cff;
 
-    to {
-        transform:translate(250px,200px);
-    }
+cursor:pointer;
 
-}
-
-
-
-
-nav {
-
-    display:flex;
-
-    align-items:center;
-
-    padding:20px 50px;
-
-    background:
-    rgba(20,20,35,.65);
-
-    backdrop-filter:blur(15px);
+transition:.25s;
 
 }
 
 
+.logo:hover{
 
-.logo {
+transform:scale(1.05);
 
-    font-size:42px;
-
-    font-weight:900;
-
-    color:#8b6cff;
-
-    cursor:pointer;
-
-    line-height:1;
-
-    transition:.25s;
+filter:
+drop-shadow(
+0 0 15px #8b6cff
+);
 
 }
 
 
+.tagline{
 
-.logo:hover {
+margin-left:20px;
 
-    transform:scale(1.05);
+font-size:18px;
 
-    filter:
-    drop-shadow(
-    0 0 15px #8b6cff
-    );
+color:white;
 
-}
-
-
-
-.tagline {
-
-    margin-left:20px;
-
-    font-size:18px;
-
-    color:white;
-
-    opacity:.85;
+opacity:.85;
 
 }
 
 
+.spacer{
 
-.spacer {
+flex:1;
 
-    flex:1;
+}
+
+
+button{
+
+border:none;
+
+padding:12px 22px;
+
+border-radius:12px;
+
+background:#7c5cff;
+
+color:white;
+
+cursor:pointer;
+
+transition:.25s;
+
+}
+
+
+button:hover{
+
+transform:translateY(-3px);
+
+box-shadow:
+0 10px 30px #7c5cff55;
+
+}
+
+
+.navbutton{
+
+margin-left:10px;
+
+}
+
+
+.axbux{
+
+background:#22223a;
 
 }
 
 
 
-button {
+.hero{
 
-    border:none;
+text-align:center;
 
-    padding:12px 22px;
+margin-top:120px;
 
-    border-radius:12px;
+}
 
-    cursor:pointer;
 
-    color:white;
+.hero h1{
 
-    background:#7c5cff;
-
-    transition:.25s;
+font-size:60px;
 
 }
 
 
 
-button:hover {
+.hero p{
 
-    transform:translateY(-3px);
+font-size:22px;
 
-    box-shadow:
-    0 10px 30px #7c5cff55;
-
-}
-
-
-
-.navbutton {
-
-    margin-left:10px;
+color:#ccc;
 
 }
 
 
 
-.axbux {
+.games{
 
-    background:#22223a;
+width:80%;
 
-}
-
-
-
-.hero {
-
-    text-align:center;
-
-    margin-top:100px;
-
-    animation:fade 1s;
+margin:80px auto;
 
 }
 
 
 
-.hero h1 {
+.game-card{
 
-    font-size:60px;
+width:300px;
 
-}
+padding:25px;
 
+border-radius:20px;
 
-
-.hero p {
-
-    color:#ccc;
-
-    font-size:22px;
+background:#1e1e32;
 
 }
 
-
-
-
-.games {
-
-    width:80%;
-
-    margin:80px auto;
-
-}
-
-
-
-.games h2 {
-
-    font-size:40px;
-
-}
-
-
-
-.game-card {
-
-    width:300px;
-
-    padding:25px;
-
-    border-radius:20px;
-
-    background:
-    rgba(30,30,50,.8);
-
-    transition:.25s;
-
-}
-
-
-
-.game-card:hover {
-
-    transform:translateY(-8px);
-
-}
-
-
-
-.game-card h3 {
-
-    font-size:28px;
-
-}
-
-
-
-.game-card p {
-
-    color:#aaa;
-
-}
-
-
-
-@keyframes fade {
-
-    from {
-
-        opacity:0;
-
-        transform:translateY(40px);
-
-    }
-
-    to {
-
-        opacity:1;
-
-        transform:none;
-
-    }
-
-}
 
 
 </style>
@@ -326,11 +211,12 @@ Create. Play. Explore.
 </div>
 
 
+
 <div class="spacer"></div>
 
 
 
-<button
+<button 
 class="navbutton"
 onclick="goGames()">
 
@@ -367,8 +253,8 @@ Login
 
 
 
-<section class="hero">
 
+<div class="hero">
 
 <h1>
 
@@ -383,8 +269,8 @@ Create worlds. Play games. Explore experiences.
 
 </p>
 
+</div>
 
-</section>
 
 
 
@@ -450,8 +336,7 @@ localStorage.getItem("axbux") || 0;
 
 
 
-
-function updateUI(){
+async function updateUI(){
 
 
 if(loggedIn){
@@ -468,9 +353,16 @@ document
 
 
 
+let verified =
+await checkVerified(username);
+
+
+
 document
 .getElementById("accountButton")
-.innerText=username;
+.innerText =
+username +
+(verified ? " ✓" : "");
 
 
 }
@@ -478,6 +370,25 @@ document
 
 }
 
+
+
+
+
+async function checkVerified(user){
+
+
+let response =
+await fetch("verified.json");
+
+
+let data =
+await response.json();
+
+
+return data.users.includes(user);
+
+
+}
 
 
 
@@ -495,16 +406,16 @@ alert(
 
 }
 
-else {
+else{
 
 
-window.location.href =
-"login/";
+window.location.href="login/";
+
+}
+
 
 }
 
-
-}
 
 
 
@@ -512,29 +423,21 @@ window.location.href =
 function goAxBux(){
 
 
-window.location.href =
-"axbux/";
+window.location.href="axbux/";
 
 }
-
 
 
 
 function goHome(){
 
-
-window.location.href =
-"./";
-
+window.location.href="./";
 
 }
 
 
 
-
-
 function goGames(){
-
 
 document
 .getElementById("games")
@@ -544,21 +447,16 @@ behavior:"smooth"
 }
 );
 
-
 }
-
 
 
 
 function playGame(){
 
-
-window.location.href =
+window.location.href=
 "axora://game/baseplate";
 
-
 }
-
 
 
 updateUI();

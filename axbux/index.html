@@ -5,45 +5,255 @@
 
 <title>AxBux - Axora</title>
 
+
+<style>
+
+body{
+
+margin:0;
+
+font-family:Arial;
+
+background:#090014;
+
+color:white;
+
+text-align:center;
+
+}
+
+
+.box{
+
+margin:100px auto;
+
+background:#1e1e32;
+
+padding:40px;
+
+border-radius:20px;
+
+width:400px;
+
+}
+
+
+input{
+
+padding:12px;
+
+border-radius:10px;
+
+border:none;
+
+}
+
+
+
+button{
+
+padding:12px 25px;
+
+border:none;
+
+border-radius:10px;
+
+background:#7c5cff;
+
+color:white;
+
+cursor:pointer;
+
+}
+
+
+</style>
+
 </head>
 
 
-<body style="
-background:#090014;
-color:white;
-font-family:Arial;
-text-align:center;
-padding-top:100px;
-">
+<body>
+
+
+<div class="box">
 
 
 <h1>
+
 💰 AxBux
+
 </h1>
 
 
+
 <h2>
-Your balance:
+
+Balance:
+
 </h2>
 
 
 <h1 id="balance">
+
 0 AxBux
+
 </h1>
+
+
+
+
+<h2>
+
+🎁 Promo Codes
+
+</h2>
+
+
+
+<input
+id="promo"
+placeholder="Enter code">
+
+
+
+<br><br>
+
+
+
+<button onclick="redeem()">
+
+Redeem
+
+</button>
+
+
+
+<p id="message"></p>
+
+
+</div>
+
+
+
 
 
 
 <script>
 
 
-let amount =
-localStorage.getItem("axbux") || 0;
+let axbux =
+Number(localStorage.getItem("axbux") || 0);
+
 
 
 document
 .getElementById("balance")
 .innerText =
-amount + " AxBux";
+axbux + " AxBux";
+
+
+
+
+
+async function redeem(){
+
+
+let code =
+document
+.getElementById("promo")
+.value
+.toUpperCase();
+
+
+
+let response =
+await fetch("../promos.json");
+
+
+let data =
+await response.json();
+
+
+
+let promo =
+data.codes.find(
+x=>x.code==code
+);
+
+
+
+if(!promo || !promo.active){
+
+
+message.innerText=
+"Invalid code";
+
+return;
+
+
+}
+
+
+
+
+let claimed =
+JSON.parse(
+localStorage.getItem("claimedPromos")
+|| "[]"
+);
+
+
+
+if(claimed.includes(code)){
+
+
+message.innerText=
+"Already redeemed";
+
+
+return;
+
+
+}
+
+
+
+axbux += promo.reward;
+
+
+
+localStorage.setItem(
+"axbux",
+axbux
+);
+
+
+
+claimed.push(code);
+
+
+
+localStorage.setItem(
+"claimedPromos",
+JSON.stringify(claimed)
+);
+
+
+
+document
+.getElementById("balance")
+.innerText =
+axbux+" AxBux";
+
+
+
+document
+.getElementById("message")
+.innerText =
+"Received "+promo.reward+" AxBux!";
+
+
+}
 
 
 </script>

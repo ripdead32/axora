@@ -7,7 +7,7 @@
 
 <style>
 
-body {
+body{
 
 margin:0;
 
@@ -21,14 +21,14 @@ justify-content:center;
 
 background:#090014;
 
-font-family:Arial;
-
 color:white;
+
+font-family:Arial;
 
 }
 
 
-.box {
+.box{
 
 background:#1e1e32;
 
@@ -41,35 +41,34 @@ text-align:center;
 }
 
 
-input {
+input{
 
 padding:12px;
 
-border-radius:10px;
-
 border:none;
+
+border-radius:10px;
 
 }
 
 
-button {
+button{
 
 margin-top:20px;
 
 padding:12px 30px;
 
-border:none;
-
-border-radius:10px;
-
 background:#7c5cff;
 
 color:white;
 
+border:none;
+
+border-radius:10px;
+
 cursor:pointer;
 
 }
-
 
 </style>
 
@@ -83,8 +82,11 @@ cursor:pointer;
 
 
 <h1>
+
 Axora Login
+
 </h1>
+
 
 
 <input
@@ -92,7 +94,9 @@ id="username"
 placeholder="Username">
 
 
+
 <br>
+
 
 
 <button onclick="login()">
@@ -113,7 +117,7 @@ Continue
 function login(){
 
 
-let user =
+let username =
 document
 .getElementById("username")
 .value
@@ -121,7 +125,7 @@ document
 
 
 
-if(user=="")
+if(username=="")
 return;
 
 
@@ -134,15 +138,18 @@ localStorage.setItem(
 
 localStorage.setItem(
 "username",
-user
+username
 );
 
 
+if(!localStorage.getItem("axbux")){
 
 localStorage.setItem(
 "axbux",
-localStorage.getItem("axbux") || "0"
+"0"
 );
+
+}
 
 
 
