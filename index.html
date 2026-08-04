@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Axora</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #0d0d12;
+            color: white;
+            text-align: center;
+        }
+
+        header {
+            padding: 30px;
+            background: #151522;
+        }
+
+        .logo {
+            font-size: 48px;
+            font-weight: bold;
+            color: #7c5cff;
+        }
+
+        .tagline {
+            font-size: 20px;
+            color: #aaa;
+        }
+
+        .card {
+            background: #1b1b2b;
+            margin: 30px auto;
+            padding: 25px;
+            border-radius: 15px;
+            width: 350px;
+        }
+
+        button {
+            background: #7c5cff;
+            border: none;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background: #6344ff;
+        }
+
+        input {
+            padding: 12px;
+            border-radius: 8px;
+            border: none;
+            width: 200px;
+            margin-bottom: 10px;
+        }
+
+        .axbux {
+            color: #ffd700;
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        footer {
+            margin-top: 50px;
+            color: #777;
+        }
+    </style>
+
+</head>
+
+<body>
+
+<header>
+    <div class="logo">Axora</div>
+    <div class="tagline">
+        Create. Play. Explore.
+    </div>
+</header>
+
+
+<div class="card">
+
+    <h2>Baseplate</h2>
+
+    <p>
+        Made with Rip_Dead Engine
+    </p>
+
+    <button onclick="playGame()">
+        ▶ Play
+    </button>
+
+</div>
+
+
+<div class="card">
+
+    <h2>Your AxBux</h2>
+
+    <div class="axbux">
+        💰 <span id="balance">0</span> AxBux
+    </div>
+
+</div>
+
+
+<div class="card">
+
+    <h2>Promo Codes</h2>
+
+    <input id="promoInput" placeholder="Enter code">
+
+    <br>
+
+    <button onclick="redeemPromo()">
+        Redeem
+    </button>
+
+    <p id="message"></p>
+
+</div>
+
+
+<footer>
+    Powered by Rip_Dead Engine
+</footer>
+
+
+
+<script>
+
+let axbux = localStorage.getItem("axbux") || 0;
+
+document.getElementById("balance").innerText = axbux;
+
+
+
+function playGame() {
+
+    window.location.href =
+    "axora://game/baseplate";
+
+}
+
+
+
+async function redeemPromo() {
+
+    let input =
+    document.getElementById("promoInput")
+    .value
+    .toUpperCase();
+
+
+    let response =
+    await fetch("promos.json");
+
+
+    let data =
+    await response.json();
+
+
+    let found =
+    data.codes.find(
+        x => x.code === input
+    );
+
+
+    let message =
+    document.getElementById("message");
+
+
+    if(found && found.active) {
+
+
+        let claimed =
+        JSON.parse(
+            localStorage.getItem("claimedPromos")
+            || "[]"
+        );
+
+
+        if(claimed.includes(input)) {
+
+            message.innerText =
+            "Already redeemed!";
+
+            return;
+        }
+
+
+        axbux =
+        Number(axbux)
+        +
+        found.reward;
+
+
+        localStorage.setItem(
+            "axbux",
+            axbux
+        );
+
+
+        claimed.push(input);
+
+
+        localStorage.setItem(
+            "claimedPromos",
+            JSON.stringify(claimed)
+        );
+
+
+        document.getElementById("balance")
+        .innerText = axbux;
+
+
+        message.innerText =
+        "Received "
+        + found.reward
+        + " AxBux!";
+
+
+    } else {
+
+        message.innerText =
+        "Invalid promo code.";
+
+    }
+
+}
+
+</script>
+
+
+</body>
+</html>
