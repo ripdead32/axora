@@ -8,145 +8,205 @@
 <style>
 
 *{
-box-sizing:border-box;
+    box-sizing:border-box;
 }
 
 body{
 
-margin:0;
-font-family:Arial,sans-serif;
-color:white;
+    margin:0;
+    font-family:Arial,sans-serif;
 
-background:
-linear-gradient(
-135deg,
-#090014,
-#15102b,
-#090014
-);
+    color:white;
 
-min-height:100vh;
+    background:
+    linear-gradient(
+        135deg,
+        #090014,
+        #15102b,
+        #090014
+    );
+
+    min-height:100vh;
+
+    overflow-x:hidden;
+}
+
+
+body::before{
+
+    content:"";
+
+    position:fixed;
+
+    width:500px;
+    height:500px;
+
+    background:#7c5cff;
+
+    filter:blur(180px);
+
+    top:-150px;
+    left:-150px;
+
+    animation:float 8s infinite alternate;
 
 }
 
+
+@keyframes float{
+
+    from{
+        transform:translate(0,0);
+    }
+
+    to{
+        transform:translate(250px,200px);
+    }
+
+}
+
+
+/* Navbar */
 
 nav{
 
-display:flex;
-align-items:center;
+    display:flex;
 
-padding:20px 50px;
+    align-items:center;
 
-background:
-rgba(20,20,35,.7);
+    padding:20px 50px;
 
-backdrop-filter:blur(15px);
+    background:
+    rgba(20,20,35,.7);
+
+    backdrop-filter:blur(15px);
 
 }
+
 
 
 .logo{
 
-font-size:42px;
-font-weight:900;
+    font-size:42px;
 
-color:#8b6cff;
+    font-weight:900;
 
-cursor:pointer;
+    color:#8b6cff;
 
-transition:.25s;
+    cursor:pointer;
+
+    line-height:1;
+
+    transition:.25s;
 
 }
 
 
 .logo:hover{
 
-transform:scale(1.05);
+    transform:scale(1.05);
 
-filter:
-drop-shadow(
-0 0 15px #8b6cff
-);
+    filter:
+    drop-shadow(
+    0 0 15px #8b6cff
+    );
 
 }
+
 
 
 .tagline{
 
-margin-left:20px;
+    margin-left:20px;
 
-font-size:18px;
+    font-size:18px;
 
-color:white;
+    color:white;
 
-opacity:.85;
+    opacity:.85;
 
 }
+
 
 
 .spacer{
 
-flex:1;
+    flex:1;
 
 }
+
 
 
 button{
 
-border:none;
+    border:none;
 
-padding:12px 22px;
+    padding:12px 22px;
 
-border-radius:12px;
+    border-radius:12px;
 
-background:#7c5cff;
+    background:#7c5cff;
 
-color:white;
+    color:white;
 
-cursor:pointer;
+    cursor:pointer;
 
-transition:.25s;
+    transition:.25s;
 
 }
+
 
 
 button:hover{
 
-transform:translateY(-3px);
+    transform:translateY(-3px);
 
-box-shadow:
-0 10px 30px #7c5cff55;
+    box-shadow:
+    0 10px 30px #7c5cff55;
 
 }
+
 
 
 .navbutton{
 
-margin-left:10px;
+    margin-left:10px;
 
 }
+
 
 
 .axbux{
 
-background:#22223a;
+    background:#22223a;
 
 }
 
+
+
+.logout{
+
+    background:#3a1f2b;
+
+}
+
+
+/* Hero */
 
 
 .hero{
 
-text-align:center;
+    text-align:center;
 
-margin-top:120px;
+    margin-top:120px;
 
 }
 
 
+
 .hero h1{
 
-font-size:60px;
+    font-size:60px;
 
 }
 
@@ -154,19 +214,22 @@ font-size:60px;
 
 .hero p{
 
-font-size:22px;
+    font-size:22px;
 
-color:#ccc;
+    color:#ccc;
 
 }
 
 
 
+/* Games */
+
+
 .games{
 
-width:80%;
+    width:80%;
 
-margin:80px auto;
+    margin:80px auto;
 
 }
 
@@ -174,13 +237,31 @@ margin:80px auto;
 
 .game-card{
 
-width:300px;
+    width:300px;
 
-padding:25px;
+    padding:25px;
 
-border-radius:20px;
+    border-radius:20px;
 
-background:#1e1e32;
+    background:#1e1e32;
+
+    transition:.25s;
+
+}
+
+
+
+.game-card:hover{
+
+    transform:translateY(-8px);
+
+}
+
+
+
+.game-card p{
+
+    color:#aaa;
 
 }
 
@@ -192,6 +273,7 @@ background:#1e1e32;
 
 
 <body>
+
 
 
 <nav>
@@ -216,7 +298,7 @@ Create. Play. Explore.
 
 
 
-<button 
+<button
 class="navbutton"
 onclick="goGames()">
 
@@ -248,13 +330,26 @@ Login
 </button>
 
 
+
+<button
+id="logoutButton"
+class="navbutton logout"
+style="display:none"
+onclick="logout()">
+
+Logout
+
+</button>
+
+
 </nav>
 
 
 
 
 
-<div class="hero">
+<section class="hero">
+
 
 <h1>
 
@@ -269,7 +364,8 @@ Create worlds. Play games. Explore experiences.
 
 </p>
 
-</div>
+
+</section>
 
 
 
@@ -301,7 +397,6 @@ Baseplate
 Made with Rip_Dead Engine
 
 </p>
-
 
 
 <button onclick="playGame()">
@@ -336,6 +431,8 @@ localStorage.getItem("axbux") || 0;
 
 
 
+
+
 async function updateUI(){
 
 
@@ -345,6 +442,13 @@ if(loggedIn){
 document
 .getElementById("axbuxButton")
 .style.display="block";
+
+
+
+document
+.getElementById("logoutButton")
+.style.display="block";
+
 
 
 document
@@ -365,6 +469,27 @@ username +
 (verified ? " ✓" : "");
 
 
+
+}
+
+else{
+
+
+document
+.getElementById("axbuxButton")
+.style.display="none";
+
+
+document
+.getElementById("logoutButton")
+.style.display="none";
+
+
+document
+.getElementById("accountButton")
+.innerText="Login";
+
+
 }
 
 
@@ -375,6 +500,9 @@ username +
 
 
 async function checkVerified(user){
+
+
+try{
 
 
 let response =
@@ -389,6 +517,17 @@ return data.users.includes(user);
 
 
 }
+
+catch{
+
+
+return false;
+
+}
+
+
+}
+
 
 
 
@@ -420,6 +559,29 @@ window.location.href="login/";
 
 
 
+function logout(){
+
+
+localStorage.removeItem(
+"loggedIn"
+);
+
+
+localStorage.removeItem(
+"username"
+);
+
+
+
+location.reload();
+
+
+}
+
+
+
+
+
 function goAxBux(){
 
 
@@ -429,7 +591,10 @@ window.location.href="axbux/";
 
 
 
+
+
 function goHome(){
+
 
 window.location.href="./";
 
@@ -437,7 +602,10 @@ window.location.href="./";
 
 
 
+
+
 function goGames(){
+
 
 document
 .getElementById("games")
@@ -447,16 +615,24 @@ behavior:"smooth"
 }
 );
 
+
 }
+
+
 
 
 
 function playGame(){
 
+
 window.location.href=
 "axora://game/baseplate";
 
+
 }
+
+
+
 
 
 updateUI();
