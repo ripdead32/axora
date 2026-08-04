@@ -1,0 +1,14 @@
+{
+  "codes": [
+    {
+      "code": "WELCOMEAXORA",
+      "reward": 100,
+      "active": true
+    },
+    {
+      "code": "RIPDEAD2026",
+      "reward": 500,
+      "active": true
+    }
+  ]
+}
