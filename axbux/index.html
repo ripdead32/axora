@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>AxBux - Axora</title>
+
+</head>
+
+
+<body style="
+background:#090014;
+color:white;
+font-family:Arial;
+text-align:center;
+padding-top:100px;
+">
+
+
+<h1>
+💰 AxBux
+</h1>
+
+
+<h2>
+Your balance:
+</h2>
+
+
+<h1 id="balance">
+0 AxBux
+</h1>
+
+
+
+<script>
+
+
+let amount =
+localStorage.getItem("axbux") || 0;
+
+
+document
+.getElementById("balance")
+.innerText =
+amount + " AxBux";
+
+
+</script>
+
+
+</body>
+
+</html>

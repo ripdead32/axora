@@ -3,300 +3,70 @@
 
 <head>
 
-<title>Axora</title>
+<title>Axora Login</title>
 
 <style>
 
-* {
-    box-sizing:border-box;
-}
-
-
 body {
 
-    margin:0;
+margin:0;
 
-    font-family:Arial,sans-serif;
+height:100vh;
 
-    color:white;
+display:flex;
 
-    background:
-    linear-gradient(
-        135deg,
-        #090014,
-        #15102b,
-        #090014
-    );
+align-items:center;
 
-    min-height:100vh;
+justify-content:center;
 
-    overflow-x:hidden;
+background:#090014;
+
+font-family:Arial;
+
+color:white;
 
 }
 
 
+.box {
 
-body::before {
+background:#1e1e32;
 
-    content:"";
+padding:40px;
 
-    position:fixed;
+border-radius:20px;
 
-    width:500px;
-    height:500px;
-
-    background:#7c5cff;
-
-    filter:blur(180px);
-
-    top:-150px;
-    left:-150px;
-
-    animation:float 8s infinite alternate;
+text-align:center;
 
 }
 
 
+input {
 
-@keyframes float {
+padding:12px;
 
-    from {
-        transform:translate(0,0);
-    }
+border-radius:10px;
 
-    to {
-        transform:translate(250px,200px);
-    }
+border:none;
 
 }
-
-
-
-
-nav {
-
-    display:flex;
-
-    align-items:center;
-
-    padding:20px 50px;
-
-    background:
-    rgba(20,20,35,.65);
-
-    backdrop-filter:blur(15px);
-
-}
-
-
-
-.logo {
-
-    font-size:42px;
-
-    font-weight:900;
-
-    color:#8b6cff;
-
-    cursor:pointer;
-
-    line-height:1;
-
-    transition:.25s;
-
-}
-
-
-
-.logo:hover {
-
-    transform:scale(1.05);
-
-    filter:
-    drop-shadow(
-    0 0 15px #8b6cff
-    );
-
-}
-
-
-
-.tagline {
-
-    margin-left:20px;
-
-    font-size:18px;
-
-    color:white;
-
-    opacity:.85;
-
-}
-
-
-
-.spacer {
-
-    flex:1;
-
-}
-
 
 
 button {
 
-    border:none;
+margin-top:20px;
 
-    padding:12px 22px;
+padding:12px 30px;
 
-    border-radius:12px;
+border:none;
 
-    cursor:pointer;
+border-radius:10px;
 
-    color:white;
+background:#7c5cff;
 
-    background:#7c5cff;
+color:white;
 
-    transition:.25s;
-
-}
-
-
-
-button:hover {
-
-    transform:translateY(-3px);
-
-    box-shadow:
-    0 10px 30px #7c5cff55;
-
-}
-
-
-
-.navbutton {
-
-    margin-left:10px;
-
-}
-
-
-
-.axbux {
-
-    background:#22223a;
-
-}
-
-
-
-.hero {
-
-    text-align:center;
-
-    margin-top:100px;
-
-    animation:fade 1s;
-
-}
-
-
-
-.hero h1 {
-
-    font-size:60px;
-
-}
-
-
-
-.hero p {
-
-    color:#ccc;
-
-    font-size:22px;
-
-}
-
-
-
-
-.games {
-
-    width:80%;
-
-    margin:80px auto;
-
-}
-
-
-
-.games h2 {
-
-    font-size:40px;
-
-}
-
-
-
-.game-card {
-
-    width:300px;
-
-    padding:25px;
-
-    border-radius:20px;
-
-    background:
-    rgba(30,30,50,.8);
-
-    transition:.25s;
-
-}
-
-
-
-.game-card:hover {
-
-    transform:translateY(-8px);
-
-}
-
-
-
-.game-card h3 {
-
-    font-size:28px;
-
-}
-
-
-
-.game-card p {
-
-    color:#aaa;
-
-}
-
-
-
-@keyframes fade {
-
-    from {
-
-        opacity:0;
-
-        transform:translateY(40px);
-
-    }
-
-    to {
-
-        opacity:1;
-
-        transform:none;
-
-    }
+cursor:pointer;
 
 }
 
@@ -309,127 +79,30 @@ button:hover {
 <body>
 
 
-<nav>
-
-
-<div class="logo" onclick="goHome()">
-
-Axora
-
-</div>
-
-
-<div class="tagline">
-
-Create. Play. Explore.
-
-</div>
-
-
-<div class="spacer"></div>
-
-
-
-<button
-class="navbutton"
-onclick="goGames()">
-
-Games
-
-</button>
-
-
-
-<button
-id="axbuxButton"
-class="navbutton axbux"
-style="display:none"
-onclick="goAxBux()">
-
-💰 <span id="balance">0</span> AxBux
-
-</button>
-
-
-
-<button
-id="accountButton"
-class="navbutton"
-onclick="accountAction()">
-
-Login
-
-</button>
-
-
-</nav>
-
-
-
-
-<section class="hero">
+<div class="box">
 
 
 <h1>
-
-Welcome to Axora
-
+Axora Login
 </h1>
 
 
-<p>
-
-Create worlds. Play games. Explore experiences.
-
-</p>
+<input
+id="username"
+placeholder="Username">
 
 
-</section>
+<br>
 
 
+<button onclick="login()">
 
-
-<section class="games" id="games">
-
-
-<h2>
-
-Games
-
-</h2>
-
-
-
-<div class="game-card">
-
-
-<h3>
-
-Baseplate
-
-</h3>
-
-
-<p>
-
-Made with Rip_Dead Engine
-
-</p>
-
-
-
-<button onclick="playGame()">
-
-▶ Play
+Continue
 
 </button>
 
 
 </div>
-
-
-</section>
-
 
 
 
@@ -437,131 +110,46 @@ Made with Rip_Dead Engine
 <script>
 
 
-let loggedIn =
-localStorage.getItem("loggedIn");
+function login(){
 
 
-let username =
-localStorage.getItem("username");
-
-
-let axbux =
-localStorage.getItem("axbux") || 0;
-
-
-
-
-function updateUI(){
-
-
-if(loggedIn){
-
-
+let user =
 document
-.getElementById("axbuxButton")
-.style.display="block";
-
-
-document
-.getElementById("balance")
-.innerText=axbux;
+.getElementById("username")
+.value
+.trim();
 
 
 
-document
-.getElementById("accountButton")
-.innerText=username;
-
-
-}
-
-
-}
+if(user=="")
+return;
 
 
 
-
-
-function accountAction(){
-
-
-if(loggedIn){
-
-
-alert(
-"Profile coming soon!"
+localStorage.setItem(
+"loggedIn",
+"true"
 );
 
 
-}
-
-else {
-
-
-window.location.href =
-"login/";
-
-}
-
-
-}
-
-
-
-
-function goAxBux(){
-
-
-window.location.href =
-"axbux/";
-
-}
-
-
-
-
-function goHome(){
-
-
-window.location.href =
-"./";
-
-
-}
-
-
-
-
-
-function goGames(){
-
-
-document
-.getElementById("games")
-.scrollIntoView(
-{
-behavior:"smooth"
-}
+localStorage.setItem(
+"username",
+user
 );
 
 
+
+localStorage.setItem(
+"axbux",
+localStorage.getItem("axbux") || "0"
+);
+
+
+
+window.location.href="../";
+
+
 }
-
-
-
-
-function playGame(){
-
-
-window.location.href =
-"axora://game/baseplate";
-
-
-}
-
-
-
-updateUI();
 
 
 </script>
