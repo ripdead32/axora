@@ -1,237 +1,416 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Axora</title>
 
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #0d0d12;
-            color: white;
-            text-align: center;
-        }
+<title>Axora</title>
 
-        header {
-            padding: 30px;
-            background: #151522;
-        }
+<style>
 
-        .logo {
-            font-size: 48px;
-            font-weight: bold;
-            color: #7c5cff;
-        }
+* {
+    box-sizing: border-box;
+}
 
-        .tagline {
-            font-size: 20px;
-            color: #aaa;
-        }
+body {
 
-        .card {
-            background: #1b1b2b;
-            margin: 30px auto;
-            padding: 25px;
-            border-radius: 15px;
-            width: 350px;
-        }
+    margin:0;
+    font-family: Arial, sans-serif;
+    color:white;
 
-        button {
-            background: #7c5cff;
-            border: none;
-            color: white;
-            padding: 12px 25px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 16px;
-        }
+    background:
+    linear-gradient(
+        135deg,
+        #090014,
+        #15102b,
+        #090014
+    );
 
-        button:hover {
-            background: #6344ff;
-        }
+    min-height:100vh;
 
-        input {
-            padding: 12px;
-            border-radius: 8px;
-            border: none;
-            width: 200px;
-            margin-bottom: 10px;
-        }
+    overflow-x:hidden;
+}
 
-        .axbux {
-            color: #ffd700;
-            font-size: 22px;
-            font-weight: bold;
-        }
 
-        footer {
-            margin-top: 50px;
-            color: #777;
-        }
-    </style>
+/* Animated background */
+
+body::before {
+
+    content:"";
+
+    position:fixed;
+
+    width:500px;
+    height:500px;
+
+    background:#7c5cff;
+
+    filter:blur(180px);
+
+    top:-150px;
+    left:-150px;
+
+    animation:
+    float 8s infinite alternate;
+
+}
+
+
+@keyframes float {
+
+    from {
+        transform:translate(0,0);
+    }
+
+    to {
+        transform:translate(250px,200px);
+    }
+
+}
+
+
+
+/* Navbar */
+
+nav {
+
+    display:flex;
+
+    align-items:center;
+
+    padding:20px 50px;
+
+    background:
+    rgba(20,20,35,0.65);
+
+    backdrop-filter:blur(15px);
+
+}
+
+
+
+/* Logo */
+
+.logo {
+
+    font-size:42px;
+
+    font-weight:900;
+
+    color:#8b6cff;
+
+    animation:
+    fadeDown 1s;
+
+}
+
+
+
+.tagline {
+
+    margin-left:20px;
+
+    font-size:18px;
+
+    color:white;
+
+    opacity:.85;
+
+}
+
+
+
+.spacer {
+
+    flex:1;
+
+}
+
+
+
+button {
+
+    border:none;
+
+    padding:12px 22px;
+
+    border-radius:12px;
+
+    cursor:pointer;
+
+    font-size:15px;
+
+    color:white;
+
+    background:#7c5cff;
+
+    transition:.25s;
+
+}
+
+
+
+button:hover {
+
+    transform:translateY(-3px);
+
+    box-shadow:
+    0 10px 30px #7c5cff55;
+
+}
+
+
+
+.axbux {
+
+    margin-right:15px;
+
+    background:#22223a;
+
+}
+
+
+
+.login {
+
+    background:#7c5cff;
+
+}
+
+
+
+/* Hero */
+
+
+.hero {
+
+    text-align:center;
+
+    margin-top:120px;
+
+    animation:
+    fadeUp 1s;
+
+}
+
+
+
+.hero h1 {
+
+    font-size:60px;
+
+}
+
+
+
+.hero p {
+
+    font-size:22px;
+
+    color:#ccc;
+
+}
+
+
+
+.play {
+
+    margin-top:30px;
+
+    font-size:20px;
+
+    padding:16px 45px;
+
+}
+
+
+
+@keyframes fadeUp {
+
+    from {
+
+        opacity:0;
+
+        transform:translateY(40px);
+
+    }
+
+    to {
+
+        opacity:1;
+
+        transform:none;
+
+    }
+
+}
+
+
+
+@keyframes fadeDown {
+
+    from {
+
+        opacity:0;
+
+        transform:translateY(-30px);
+
+    }
+
+    to {
+
+        opacity:1;
+
+        transform:none;
+
+    }
+
+}
+
+
+</style>
 
 </head>
 
+
 <body>
 
-<header>
-    <div class="logo">Axora</div>
-    <div class="tagline">
-        Create. Play. Explore.
-    </div>
-</header>
+
+<nav>
 
 
-<div class="card">
+<div class="logo">
+Axora
+</div>
 
-    <h2>Baseplate</h2>
 
-    <p>
-        Made with Rip_Dead Engine
-    </p>
+<div class="tagline">
+Create. Play. Explore.
+</div>
 
-    <button onclick="playGame()">
-        ▶ Play
-    </button>
+
+<div class="spacer"></div>
+
+
+
+<button 
+class="axbux"
+id="axbuxButton"
+style="display:none">
+
+💰 <span id="balance">
+0
+</span> AxBux
+
+</button>
+
+
+
+<button 
+class="login"
+onclick="login()">
+
+Login
+
+</button>
+
+
+</nav>
+
+
+
+
+<div class="hero">
+
+
+<h1>
+Welcome to Axora
+</h1>
+
+
+<p>
+Create worlds. Play games. Explore experiences.
+</p>
+
+
+
+<button 
+class="play"
+onclick="playGame()">
+
+▶ Play Baseplate
+
+</button>
+
 
 </div>
 
 
-<div class="card">
-
-    <h2>Your AxBux</h2>
-
-    <div class="axbux">
-        💰 <span id="balance">0</span> AxBux
-    </div>
-
-</div>
-
-
-<div class="card">
-
-    <h2>Promo Codes</h2>
-
-    <input id="promoInput" placeholder="Enter code">
-
-    <br>
-
-    <button onclick="redeemPromo()">
-        Redeem
-    </button>
-
-    <p id="message"></p>
-
-</div>
-
-
-<footer>
-    Powered by Rip_Dead Engine
-</footer>
 
 
 
 <script>
 
-let axbux = localStorage.getItem("axbux") || 0;
 
-document.getElementById("balance").innerText = axbux;
+let loggedIn =
+localStorage.getItem("loggedIn");
+
+let axbux =
+localStorage.getItem("axbux") || 0;
 
 
 
-function playGame() {
+function updateUI(){
 
-    window.location.href =
+
+if(loggedIn){
+
+    document
+    .getElementById("axbuxButton")
+    .style.display="block";
+
+
+    document
+    .getElementById("balance")
+    .innerText=axbux;
+
+
+}
+
+}
+
+
+
+function login(){
+
+    localStorage.setItem(
+        "loggedIn",
+        "true"
+    );
+
+
+    loggedIn=true;
+
+    updateUI();
+
+
+    alert(
+    "Prototype login successful!"
+    );
+
+}
+
+
+
+function playGame(){
+
+    window.location.href=
     "axora://game/baseplate";
 
 }
 
 
 
-async function redeemPromo() {
+updateUI();
 
-    let input =
-    document.getElementById("promoInput")
-    .value
-    .toUpperCase();
-
-
-    let response =
-    await fetch("promos.json");
-
-
-    let data =
-    await response.json();
-
-
-    let found =
-    data.codes.find(
-        x => x.code === input
-    );
-
-
-    let message =
-    document.getElementById("message");
-
-
-    if(found && found.active) {
-
-
-        let claimed =
-        JSON.parse(
-            localStorage.getItem("claimedPromos")
-            || "[]"
-        );
-
-
-        if(claimed.includes(input)) {
-
-            message.innerText =
-            "Already redeemed!";
-
-            return;
-        }
-
-
-        axbux =
-        Number(axbux)
-        +
-        found.reward;
-
-
-        localStorage.setItem(
-            "axbux",
-            axbux
-        );
-
-
-        claimed.push(input);
-
-
-        localStorage.setItem(
-            "claimedPromos",
-            JSON.stringify(claimed)
-        );
-
-
-        document.getElementById("balance")
-        .innerText = axbux;
-
-
-        message.innerText =
-        "Received "
-        + found.reward
-        + " AxBux!";
-
-
-    } else {
-
-        message.innerText =
-        "Invalid promo code.";
-
-    }
-
-}
 
 </script>
 
