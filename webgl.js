@@ -134,18 +134,73 @@ function initAxoraEngine() {
         ]);
     }
 
+    let playerX = 0;
+    let playerZ = 0;
+    let playerYaw = 0;
+
+    let camYaw = 0;
+    let camPitch = 0.35;
+    let isMouseDown = false;
+    let lastMouseX = 0;
+    let lastMouseY = 0;
+
+    const keys = {};
+
+    window.addEventListener('keydown', (e) => { keys[e.key.toLowerCase()] = true; });
+    window.addEventListener('keyup', (e) => { keys[e.key.toLowerCase()] = false; });
+
+    canvas.addEventListener('mousedown', (e) => {
+        isMouseDown = true;
+        lastMouseX = e.clientX;
+        lastMouseY = e.clientY;
+    });
+
+    window.addEventListener('mouseup', () => { isMouseDown = false; });
+
+    window.addEventListener('mousemove', (e) => {
+        if (!isMouseDown) return;
+        const deltaX = e.clientX - lastMouseX;
+        const deltaY = e.clientY - lastMouseY;
+        camYaw -= deltaX * 0.005;
+        camPitch += deltaY * 0.005;
+        camPitch = Math.max(-0.2, Math.min(1.2, camPitch));
+        lastMouseX = e.clientX;
+        lastMouseY = e.clientY;
+    });
+
     gl.enable(gl.DEPTH_TEST);
 
-    let rotation = 0;
-
     function render() {
-        rotation += 0.01;
+        let moveX = 0;
+        let moveZ = 0;
+
+        if (keys['w'] || keys['arrowup']) moveZ -= 1;
+        if (keys['s'] || keys['arrowdown']) moveZ += 1;
+        if (keys['a'] || keys['arrowleft']) moveX -= 1;
+        if (keys['d'] || keys['arrowright']) moveX += 1;
+
+        if (moveX !== 0 || moveZ !== 0) {
+            const speed = 0.15;
+            const length = Math.sqrt(moveX * moveX + moveZ * moveZ);
+            moveX /= length;
+            moveZ /= length;
+
+            const cosCam = Math.cos(camYaw);
+            const sinCam = Math.sin(camYaw);
+
+            const worldMoveX = moveX * cosCam - moveZ * sinCam;
+            const worldMoveZ = moveX * sinCam + moveZ * cosCam;
+
+            playerX += worldMoveX * speed;
+            playerZ += worldMoveZ * speed;
+            playerYaw = Math.atan2(worldMoveX, worldMoveZ);
+        }
 
         gl.clearColor(0.4, 0.7, 1.0, 1.0);
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
         const aspect = canvas.width / canvas.height;
-        const projMatrix = getPerspectiveMatrix(Math.PI / 4, aspect, 0.1, 100.0);
+        const projMatrix = getPerspectiveMatrix(Math.PI / 4, aspect, 0.1, 200.0);
         gl.uniformMatrix4fv(uniforms.projectionMatrix, false, projMatrix);
 
         gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
@@ -158,35 +213,70 @@ function initAxoraEngine() {
 
         gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, indexBuffer);
 
-        function drawPart(x, y, z, sx, sy, sz, color) {
+        const camDist = 18;
+        const camX = playerX + camDist * Math.sin(camYaw) * Math.cos(camPitch);
+        const camY = 3.0 + camDist * Math.sin(camPitch);
+        const camZ = playerZ + camDist * Math.cos(camYaw) * Math.cos(camPitch);
+
+        function drawPart(x, y, z, sx, sy, sz, color, ry = 0) {
             const colorBuffer = gl.createBuffer();
             gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);
             gl.bufferData(gl.ARRAY_BUFFER, createColorArray(...color), gl.STATIC_DRAW);
             gl.vertexAttribPointer(attribs.color, 3, gl.FLOAT, false, 0, 0);
             gl.enableVertexAttribArray(attribs.color);
 
-            const cosR = Math.cos(rotation);
-            const sinR = Math.sin(rotation);
+            let relX = x - camX;
+            let relY = y - camY;
+            let relZ = z - camZ;
+
+            const cosY = Math.cos(-camYaw);
+            const sinY = Math.sin(-camYaw);
+
+            let rx1 = relX * cosY - relZ * sinY;
+            let rz1 = relX * sinY + relZ * cosY;
+
+            const cosP = Math.cos(-camPitch);
+            const sinP = Math.sin(-camPitch);
+
+            let ry2 = relY * cosP - rz1 * sinP;
+            let rz2 = relY * sinP + rz1 * cosP;
+
+            const cosRot = Math.cos(ry - camYaw);
+            const sinRot = Math.sin(ry - camYaw);
 
             const mvMatrix = new Float32Array([
-                sx * cosR,  0,          -sz * sinR, 0,
-                0,          sy,          0,         0,
-                sx * sinR,  0,           sz * cosR, 0,
-                x * cosR + z * sinR, y, -x * sinR + z * cosR - 16, 1
+                sx * cosRot,                sx * sinRot * sinP,         -sx * sinRot * cosP,        0,
+                0,                          sy * cosP,                  sy * sinP,                  0,
+                sz * sinRot,                -sz * cosRot * sinP,        sz * cosRot * cosP,         0,
+                rx1,                        ry2,                        rz2,                        1
             ]);
 
             gl.uniformMatrix4fv(uniforms.modelViewMatrix, false, mvMatrix);
             gl.drawElements(gl.TRIANGLES, 36, gl.UNSIGNED_SHORT, 0);
         }
 
-        drawPart(0, -3.0, 0, 8.0, 0.4, 8.0, [0.3, 0.7, 0.3]);
+        drawPart(0, -1.0, 0, 60.0, 0.4, 60.0, [0.3, 0.7, 0.3]);
 
-        drawPart(0, 2.0, 0, 0.6, 0.6, 0.6, [1.0, 0.8, 0.1]);
-        drawPart(0, 0.7, 0, 0.6, 0.7, 0.3, [0.1, 0.5, 0.9]);
-        drawPart(-0.9, 0.7, 0, 0.3, 0.7, 0.3, [1.0, 0.8, 0.1]);
-        drawPart(0.9, 0.7, 0, 0.3, 0.7, 0.3, [1.0, 0.8, 0.1]);
-        drawPart(-0.35, -0.7, 0, 0.25, 0.7, 0.3, [0.7, 0.1, 0.1]);
-        drawPart(0.35, -0.7, 0, 0.25, 0.7, 0.3, [0.7, 0.1, 0.1]);
+        for (let i = -50; i <= 50; i += 10) {
+            for (let j = -50; j <= 50; j += 10) {
+                if (i !== 0 || j !== 0) {
+                    drawPart(i, -0.7, j, 4.9, 0.1, 4.9, [0.25, 0.65, 0.25]);
+                }
+            }
+        }
+
+        drawPart(playerX, 3.2, playerZ, 0.6, 0.6, 0.6, [1.0, 0.8, 0.1], playerYaw);
+        drawPart(playerX, 1.9, playerZ, 0.6, 0.7, 0.3, [0.1, 0.5, 0.9], playerYaw);
+        
+        const armOffset1X = 0.9 * Math.cos(playerYaw);
+        const armOffset1Z = -0.9 * Math.sin(playerYaw);
+        drawPart(playerX - armOffset1X, 1.9, playerZ - armOffset1Z, 0.3, 0.7, 0.3, [1.0, 0.8, 0.1], playerYaw);
+        drawPart(playerX + armOffset1X, 1.9, playerZ + armOffset1Z, 0.3, 0.7, 0.3, [1.0, 0.8, 0.1], playerYaw);
+
+        const legOffset1X = 0.35 * Math.cos(playerYaw);
+        const legOffset1Z = -0.35 * Math.sin(playerYaw);
+        drawPart(playerX - legOffset1X, 0.5, playerZ - legOffset1Z, 0.25, 0.7, 0.3, [0.7, 0.1, 0.1], playerYaw);
+        drawPart(playerX + legOffset1X, 0.5, playerZ + legOffset1Z, 0.25, 0.7, 0.3, [0.7, 0.1, 0.1], playerYaw);
 
         requestAnimationFrame(render);
     }
