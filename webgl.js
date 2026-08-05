@@ -32,6 +32,8 @@ const axoraShaders = {
     `
 };
 
+let axoraTestNothing = true;
+
 function initAxoraEngine() {
     const canvas = document.getElementById("axoraCanvas");
     const gl = canvas.getContext("webgl");
