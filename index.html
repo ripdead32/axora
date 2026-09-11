@@ -1,1067 +1,1658 @@
 <!DOCTYPE html>
+
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Axora</title>
+```
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
 
-    <link rel="icon" href="/favicon.png">
+<title>Axora</title>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+    rel="icon"
+    href="/favicon.png"
+>
 
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
-        rel="stylesheet"
-    >
+<link
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
+>
 
-    <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.0/css/all.min.css"
-    >
+<link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+>
 
-    <style>
-        * {
-            box-sizing: border-box;
-        }
+<link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+>
 
-        html {
-            scroll-behavior: smooth;
-        }
+<link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.0/css/all.min.css"
+>
 
-        body {
-            margin: 0;
-            min-height: 100vh;
+<style>
+    * {
+        box-sizing: border-box;
+    }
 
-            font-family: "Inter", sans-serif;
+    html {
+        scroll-behavior: smooth;
+    }
 
-            color: white;
+    body {
+        margin: 0;
+        min-height: 100vh;
 
-            background:
-                radial-gradient(
-                    circle at top,
-                    #241044 0%,
-                    #120821 35%,
-                    #090014 75%
-                );
+        font-family: "Inter", sans-serif;
 
-            overflow-x: hidden;
-        }
+        color: white;
 
-        body::before {
-            content: "";
+        background:
+            radial-gradient(
+                circle at top,
+                #241044 0%,
+                #120821 35%,
+                #090014 75%
+            );
 
-            position: fixed;
-            inset: 0;
+        overflow-x: hidden;
+    }
 
-            pointer-events: none;
+    body::before {
+        content: "";
 
-            background:
-                radial-gradient(
-                    circle at 20% 20%,
-                    rgba(157, 78, 221, 0.12),
-                    transparent 35%
-                ),
-                radial-gradient(
-                    circle at 80% 70%,
-                    rgba(0, 255, 255, 0.06),
-                    transparent 35%
-                );
+        position: fixed;
 
-            z-index: -1;
-        }
+        inset: 0;
 
-        a {
-            color: inherit;
-            text-decoration: none;
-        }
+        pointer-events: none;
 
-        button {
-            font-family: inherit;
-        }
+        background:
+            radial-gradient(
+                circle at 20% 20%,
+                rgba(157, 78, 221, 0.12),
+                transparent 35%
+            ),
+            radial-gradient(
+                circle at 80% 70%,
+                rgba(0, 255, 255, 0.06),
+                transparent 35%
+            );
 
-        /* ================= NAVBAR ================= */
+        z-index: -1;
+    }
+
+    a {
+        color: inherit;
+        text-decoration: none;
+    }
+
+    button {
+        font-family: inherit;
+    }
+
+    /* ================= NAVBAR ================= */
+
+    .navbar {
+        position: sticky;
+
+        top: 0;
+
+        z-index: 1000;
+
+        display: flex;
+
+        align-items: center;
+
+        height: 72px;
+
+        padding: 0 32px;
+
+        background:
+            rgba(9, 0, 20, 0.72);
+
+        backdrop-filter: blur(16px);
+
+        border-bottom:
+            1px solid
+            rgba(255, 255, 255, 0.06);
+    }
+
+    .nav-left {
+        display: flex;
+
+        align-items: center;
+
+        gap: 18px;
+
+        flex: 1;
+    }
+
+    .logo {
+        font-size: 25px;
+
+        font-weight: 800;
+
+        letter-spacing: -1px;
+
+        cursor: pointer;
+
+        text-shadow:
+            0 0 18px
+            rgba(180, 90, 255, 0.45);
+    }
+
+    .tagline {
+        color:
+            rgba(255, 255, 255, 0.5);
+
+        font-size: 14px;
+    }
+
+    .nav-right {
+        display: flex;
+
+        align-items: center;
+
+        gap: 10px;
+    }
+
+    .nav-button {
+        border: 0;
+
+        color:
+            rgba(255, 255, 255, 0.8);
+
+        background: transparent;
+
+        padding: 10px 14px;
+
+        border-radius: 10px;
+
+        font-size: 14px;
+
+        font-weight: 600;
+
+        cursor: pointer;
+
+        transition:
+            background 0.2s ease,
+            color 0.2s ease,
+            transform 0.2s ease;
+    }
+
+    .nav-button:hover {
+        color: white;
+
+        background:
+            rgba(255, 255, 255, 0.07);
+
+        transform:
+            translateY(-1px);
+    }
+
+    .nav-button.primary {
+        color: white;
+
+        background:
+            linear-gradient(
+                135deg,
+                #8f42d9,
+                #6427a5
+            );
+
+        box-shadow:
+            0 0 22px
+            rgba(143, 66, 217, 0.25);
+    }
+
+    .nav-button.primary:hover {
+        background:
+            linear-gradient(
+                135deg,
+                #a052ef,
+                #7330b8
+            );
+    }
+
+    /* ================= ACCOUNT PROFILE ================= */
+
+    .account-profile {
+        display: none;
+
+        align-items: center;
+
+        gap: 8px;
+
+        padding: 5px 9px 5px 5px;
+
+        border-radius: 11px;
+
+        background:
+            rgba(255, 255, 255, 0.06);
+
+        border:
+            1px solid
+            rgba(255, 255, 255, 0.08);
+
+        cursor: pointer;
+
+        transition:
+            background 0.2s ease,
+            transform 0.2s ease;
+    }
+
+    .account-profile.visible {
+        display: flex;
+    }
+
+    .account-profile:hover {
+        background:
+            rgba(255, 255, 255, 0.1);
+
+        transform:
+            translateY(-1px);
+    }
+
+    .account-avatar {
+        width: 34px;
+        height: 34px;
+
+        flex-shrink: 0;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        overflow: hidden;
+
+        border-radius: 50%;
+
+        color: white;
+
+        background:
+            linear-gradient(
+                135deg,
+                #9146dc,
+                #6427a5
+            );
+
+        font-size: 14px;
+
+        font-weight: 800;
+    }
+
+    .account-avatar img {
+        width: 100%;
+        height: 100%;
+
+        display: block;
+
+        object-fit: cover;
+    }
+
+    .account-name {
+        display: flex;
+
+        align-items: center;
+
+        gap: 4px;
+
+        max-width: 150px;
+
+        overflow: hidden;
+
+        white-space: nowrap;
+
+        text-overflow: ellipsis;
+
+        font-size: 13px;
+
+        font-weight: 600;
+    }
+
+    .verification-badge {
+        width: 16px;
+        height: 16px;
+
+        flex-shrink: 0;
+
+        display: inline-flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        border-radius: 50%;
+
+        color: white;
+
+        background:
+            #4f8cff;
+
+        font-size: 10px;
+
+        font-weight: 800;
+
+        box-shadow:
+            0 0 10px
+            rgba(79, 140, 255, 0.45);
+    }
+
+    /* ================= HERO ================= */
+
+    .hero {
+        min-height:
+            calc(100vh - 72px);
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        text-align: center;
+
+        padding: 80px 24px;
+    }
+
+    .hero-content {
+        max-width: 850px;
+    }
+
+    .hero h1 {
+        margin: 0;
+
+        font-size:
+            clamp(48px, 8vw, 86px);
+
+        line-height: 0.95;
+
+        font-weight: 800;
+
+        letter-spacing: -4px;
+
+        background:
+            linear-gradient(
+                135deg,
+                #ffffff,
+                #d8b4fe,
+                #a855f7
+            );
+
+        -webkit-background-clip: text;
+
+        background-clip: text;
+
+        color: transparent;
+
+        text-shadow:
+            0 0 50px
+            rgba(168, 85, 247, 0.15);
+    }
+
+    .hero p {
+        margin:
+            28px auto 0;
+
+        max-width: 620px;
+
+        color:
+            rgba(255, 255, 255, 0.62);
+
+        font-size: 18px;
+
+        line-height: 1.7;
+    }
+
+    .hero-buttons {
+        display: flex;
+
+        justify-content: center;
+
+        gap: 12px;
+
+        margin-top: 34px;
+
+        flex-wrap: wrap;
+    }
+
+    .hero-button {
+        border: 0;
+
+        padding: 14px 22px;
+
+        border-radius: 12px;
+
+        font-size: 15px;
+
+        font-weight: 700;
+
+        cursor: pointer;
+
+        transition:
+            transform 0.2s ease,
+            box-shadow 0.2s ease,
+            background 0.2s ease;
+    }
+
+    .hero-button:hover {
+        transform:
+            translateY(-2px);
+    }
+
+    .hero-button.primary {
+        color: white;
+
+        background:
+            linear-gradient(
+                135deg,
+                #9146dc,
+                #6324a3
+            );
+
+        box-shadow:
+            0 10px 35px
+            rgba(130, 45, 210, 0.2);
+    }
+
+    .hero-button.secondary {
+        color: white;
+
+        background:
+            rgba(255, 255, 255, 0.06);
+
+        border:
+            1px solid
+            rgba(255, 255, 255, 0.08);
+    }
+
+    /* ================= SECTION ================= */
+
+    .section {
+        padding: 90px 32px;
+
+        max-width: 1200px;
+
+        margin: auto;
+    }
+
+    .section-title {
+        margin: 0;
+
+        font-size: 32px;
+
+        letter-spacing: -1px;
+    }
+
+    .section-subtitle {
+        margin-top: 10px;
+
+        color:
+            rgba(255, 255, 255, 0.48);
+
+        font-size: 14px;
+    }
+
+    /* ================= GAMES ================= */
+
+    .games-grid {
+        margin-top: 30px;
+
+        display: grid;
+
+        grid-template-columns:
+            repeat(
+                auto-fill,
+                minmax(260px, 1fr)
+            );
+
+        gap: 18px;
+    }
+
+    .game-card {
+        padding: 24px;
+
+        min-height: 180px;
+
+        border-radius: 18px;
+
+        background:
+            linear-gradient(
+                145deg,
+                rgba(255, 255, 255, 0.07),
+                rgba(255, 255, 255, 0.025)
+            );
+
+        border:
+            1px solid
+            rgba(255, 255, 255, 0.07);
+
+        box-shadow:
+            0 15px 40px
+            rgba(0, 0, 0, 0.2);
+
+        transition:
+            transform 0.2s ease,
+            border-color 0.2s ease;
+    }
+
+    .game-card:hover {
+        transform:
+            translateY(-4px);
+
+        border-color:
+            rgba(168, 85, 247, 0.35);
+    }
+
+    .game-icon {
+        width: 48px;
+        height: 48px;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        border-radius: 13px;
+
+        background:
+            rgba(168, 85, 247, 0.14);
+
+        color:
+            #c084fc;
+
+        font-size: 20px;
+
+        margin-bottom: 20px;
+    }
+
+    .game-card h3 {
+        margin: 0;
+
+        font-size: 18px;
+    }
+
+    .game-card p {
+        margin: 9px 0 0;
+
+        color:
+            rgba(255, 255, 255, 0.5);
+
+        font-size: 13px;
+
+        line-height: 1.6;
+    }
+
+    .game-card button {
+        margin-top: 18px;
+
+        border: 0;
+
+        padding: 9px 13px;
+
+        border-radius: 9px;
+
+        color: white;
+
+        background:
+            rgba(168, 85, 247, 0.18);
+
+        cursor: pointer;
+
+        font-size: 13px;
+
+        font-weight: 600;
+    }
+
+    .game-card button:hover {
+        background:
+            rgba(168, 85, 247, 0.28);
+    }
+
+    /* ================= AXBUX ================= */
+
+    #axbuxButton {
+        display: none;
+    }
+
+    /* ================= FOOTER ================= */
+
+    footer {
+        padding: 45px 32px;
+
+        text-align: center;
+
+        color:
+            rgba(255, 255, 255, 0.32);
+
+        font-size: 13px;
+
+        border-top:
+            1px solid
+            rgba(255, 255, 255, 0.05);
+    }
+
+    /* ================= GAME OVERLAY ================= */
+
+    #gameOverlay {
+        display: none;
+
+        position: fixed;
+
+        inset: 0;
+
+        z-index: 5000;
+
+        background: #000;
+    }
+
+    #gameCanvas {
+        width: 100%;
+        height: 100%;
+
+        display: block;
+    }
+
+    #closeGameButton {
+        position: absolute;
+
+        top: 20px;
+
+        right: 20px;
+
+        z-index: 5100;
+
+        border: 0;
+
+        padding: 11px 15px;
+
+        border-radius: 10px;
+
+        color: white;
+
+        background:
+            rgba(0, 0, 0, 0.65);
+
+        cursor: pointer;
+
+        backdrop-filter: blur(10px);
+    }
+
+    #closeGameButton:hover {
+        background:
+            rgba(255, 255, 255, 0.12);
+    }
+
+    /* ================= MOBILE ================= */
+
+    @media (max-width: 700px) {
 
         .navbar {
-            position: sticky;
-            top: 0;
-
-            z-index: 1000;
-
-            display: flex;
-            align-items: center;
-
-            height: 72px;
-
-            padding: 0 32px;
-
-            background: rgba(9, 0, 20, 0.72);
-
-            backdrop-filter: blur(16px);
-
-            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-        }
-
-        .nav-left {
-            display: flex;
-            align-items: center;
-
-            gap: 18px;
-
-            flex: 1;
-        }
-
-        .logo {
-            font-size: 25px;
-            font-weight: 800;
-
-            letter-spacing: -1px;
-
-            cursor: pointer;
-
-            text-shadow:
-                0 0 18px rgba(180, 90, 255, 0.45);
+            padding: 0 16px;
         }
 
         .tagline {
-            color: rgba(255, 255, 255, 0.5);
-
-            font-size: 14px;
-        }
-
-        .nav-right {
-            display: flex;
-            align-items: center;
-
-            gap: 10px;
+            display: none;
         }
 
         .nav-button {
-            border: 0;
-
-            color: rgba(255, 255, 255, 0.8);
-
-            background: transparent;
-
-            padding: 10px 14px;
-
-            border-radius: 10px;
-
-            font-size: 14px;
-            font-weight: 600;
-
-            cursor: pointer;
-
-            transition:
-                background 0.2s ease,
-                color 0.2s ease,
-                transform 0.2s ease;
+            padding:
+                9px 10px;
         }
 
-        .nav-button:hover {
-            color: white;
-
-            background: rgba(255, 255, 255, 0.07);
-
-            transform: translateY(-1px);
+        .account-name {
+            max-width: 90px;
         }
-
-        .nav-button.primary {
-            color: white;
-
-            background:
-                linear-gradient(
-                    135deg,
-                    #8f42d9,
-                    #6427a5
-                );
-
-            box-shadow:
-                0 0 22px rgba(143, 66, 217, 0.25);
-        }
-
-        .nav-button.primary:hover {
-            background:
-                linear-gradient(
-                    135deg,
-                    #a052ef,
-                    #7330b8
-                );
-        }
-
-        /* ================= HERO ================= */
 
         .hero {
-            min-height: calc(100vh - 72px);
-
-            display: flex;
-
-            align-items: center;
-            justify-content: center;
-
-            text-align: center;
-
-            padding: 80px 24px;
-        }
-
-        .hero-content {
-            max-width: 850px;
+            padding:
+                60px 20px;
         }
 
         .hero h1 {
-            margin: 0;
-
-            font-size: clamp(48px, 8vw, 86px);
-
-            line-height: 0.95;
-
-            font-weight: 800;
-
-            letter-spacing: -4px;
-
-            background:
-                linear-gradient(
-                    135deg,
-                    #ffffff,
-                    #d8b4fe,
-                    #a855f7
-                );
-
-            -webkit-background-clip: text;
-            background-clip: text;
-
-            color: transparent;
-
-            text-shadow:
-                0 0 50px rgba(168, 85, 247, 0.15);
+            letter-spacing: -2px;
         }
-
-        .hero p {
-            margin: 28px auto 0;
-
-            max-width: 620px;
-
-            color: rgba(255, 255, 255, 0.62);
-
-            font-size: 18px;
-
-            line-height: 1.7;
-        }
-
-        .hero-buttons {
-            display: flex;
-
-            justify-content: center;
-
-            gap: 12px;
-
-            margin-top: 34px;
-
-            flex-wrap: wrap;
-        }
-
-        .hero-button {
-            border: 0;
-
-            padding: 14px 22px;
-
-            border-radius: 12px;
-
-            font-size: 15px;
-            font-weight: 700;
-
-            cursor: pointer;
-
-            transition:
-                transform 0.2s ease,
-                box-shadow 0.2s ease,
-                background 0.2s ease;
-        }
-
-        .hero-button:hover {
-            transform: translateY(-2px);
-        }
-
-        .hero-button.primary {
-            color: white;
-
-            background:
-                linear-gradient(
-                    135deg,
-                    #9146dc,
-                    #6324a3
-                );
-
-            box-shadow:
-                0 10px 35px rgba(130, 45, 210, 0.2);
-        }
-
-        .hero-button.secondary {
-            color: white;
-
-            background: rgba(255, 255, 255, 0.06);
-
-            border: 1px solid rgba(255, 255, 255, 0.08);
-        }
-
-        /* ================= SECTION ================= */
 
         .section {
-            padding: 90px 32px;
-
-            max-width: 1200px;
-
-            margin: auto;
+            padding:
+                70px 20px;
         }
+    }
+</style>
+```
 
-        .section-title {
-            margin: 0;
-
-            font-size: 32px;
-
-            letter-spacing: -1px;
-        }
-
-        .section-subtitle {
-            margin-top: 10px;
-
-            color: rgba(255, 255, 255, 0.48);
-
-            font-size: 14px;
-        }
-
-        /* ================= GAMES ================= */
-
-        .games-grid {
-            margin-top: 30px;
-
-            display: grid;
-
-            grid-template-columns:
-                repeat(auto-fill, minmax(260px, 1fr));
-
-            gap: 18px;
-        }
-
-        .game-card {
-            padding: 24px;
-
-            min-height: 180px;
-
-            border-radius: 18px;
-
-            background:
-                linear-gradient(
-                    145deg,
-                    rgba(255, 255, 255, 0.07),
-                    rgba(255, 255, 255, 0.025)
-                );
-
-            border: 1px solid rgba(255, 255, 255, 0.07);
-
-            box-shadow:
-                0 15px 40px rgba(0, 0, 0, 0.2);
-
-            transition:
-                transform 0.2s ease,
-                border-color 0.2s ease;
-        }
-
-        .game-card:hover {
-            transform: translateY(-4px);
-
-            border-color:
-                rgba(168, 85, 247, 0.35);
-        }
-
-        .game-icon {
-            width: 48px;
-            height: 48px;
-
-            display: flex;
-
-            align-items: center;
-            justify-content: center;
-
-            border-radius: 13px;
-
-            background:
-                rgba(168, 85, 247, 0.14);
-
-            color: #c084fc;
-
-            font-size: 20px;
-
-            margin-bottom: 20px;
-        }
-
-        .game-card h3 {
-            margin: 0;
-
-            font-size: 18px;
-        }
-
-        .game-card p {
-            margin: 9px 0 0;
-
-            color: rgba(255, 255, 255, 0.5);
-
-            font-size: 13px;
-
-            line-height: 1.6;
-        }
-
-        .game-card button {
-            margin-top: 18px;
-
-            border: 0;
-
-            padding: 9px 13px;
-
-            border-radius: 9px;
-
-            color: white;
-
-            background: rgba(168, 85, 247, 0.18);
-
-            cursor: pointer;
-
-            font-size: 13px;
-            font-weight: 600;
-        }
-
-        .game-card button:hover {
-            background: rgba(168, 85, 247, 0.28);
-        }
-
-        /* ================= AXBUX ================= */
-
-        #axbuxButton {
-            display: none;
-        }
-
-        /* ================= FOOTER ================= */
-
-        footer {
-            padding: 45px 32px;
-
-            text-align: center;
-
-            color: rgba(255, 255, 255, 0.32);
-
-            font-size: 13px;
-
-            border-top:
-                1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        /* ================= GAME OVERLAY ================= */
-
-        #gameOverlay {
-            display: none;
-
-            position: fixed;
-            inset: 0;
-
-            z-index: 5000;
-
-            background: #000;
-        }
-
-        #gameCanvas {
-            width: 100%;
-            height: 100%;
-
-            display: block;
-        }
-
-        #closeGameButton {
-            position: absolute;
-
-            top: 20px;
-            right: 20px;
-
-            z-index: 5100;
-
-            border: 0;
-
-            padding: 11px 15px;
-
-            border-radius: 10px;
-
-            color: white;
-
-            background: rgba(0, 0, 0, 0.65);
-
-            cursor: pointer;
-
-            backdrop-filter: blur(10px);
-        }
-
-        #closeGameButton:hover {
-            background: rgba(255, 255, 255, 0.12);
-        }
-
-        /* ================= MOBILE ================= */
-
-        @media (max-width: 700px) {
-
-            .navbar {
-                padding: 0 16px;
-            }
-
-            .tagline {
-                display: none;
-            }
-
-            .nav-button {
-                padding: 9px 10px;
-            }
-
-            .hero {
-                padding: 60px 20px;
-            }
-
-            .hero h1 {
-                letter-spacing: -2px;
-            }
-
-            .section {
-                padding: 70px 20px;
-            }
-        }
-    </style>
 </head>
 
 <body>
 
-    <!-- ================= NAVBAR ================= -->
+```
+<!-- ================= NAVBAR ================= -->
 
-    <nav class="navbar">
+<nav class="navbar">
 
-        <div class="nav-left">
+    <div class="nav-left">
 
-            <div
-                class="logo"
-                onclick="goHome()"
-            >
-                Axora
-            </div>
-
-            <div class="tagline">
-                Create. Play. Explore.
-            </div>
-
-        </div>
-
-        <div class="nav-right">
-
-            <button
-                class="nav-button"
-                onclick="scrollToGames()"
-            >
-                Games
-            </button>
-
-            <button
-                id="axbuxButton"
-                class="nav-button"
-                onclick="goAxBux()"
-            >
-                <i class="fa-solid fa-coins"></i>
-                AxBux
-            </button>
-
-            <button
-                id="accountButton"
-                class="nav-button primary"
-                onclick="accountAction()"
-            >
-                Login
-            </button>
-
-            <button
-                id="logoutButton"
-                class="nav-button"
-                onclick="logout()"
-                style="display: none;"
-            >
-                Logout
-            </button>
-
-        </div>
-
-    </nav>
-
-
-    <!-- ================= HERO ================= -->
-
-    <main>
-
-        <section class="hero">
-
-            <div class="hero-content">
-
-                <h1>Welcome to Axora</h1>
-
-                <p>
-                    A browser-based world powered by the
-                    Rip_Dead Engine.
-                    Create, play, and explore experiences
-                    directly from your browser.
-                </p>
-
-                <div class="hero-buttons">
-
-                    <button
-                        class="hero-button primary"
-                        onclick="scrollToGames()"
-                    >
-                        <i class="fa-solid fa-gamepad"></i>
-                        Explore Games
-                    </button>
-
-                    <button
-                        id="heroAccountButton"
-                        class="hero-button secondary"
-                        onclick="accountAction()"
-                    >
-                        <i class="fa-solid fa-user"></i>
-                        Login
-                    </button>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- ================= GAMES ================= -->
-
-        <section
-            id="games"
-            class="section"
+        <div
+            class="logo"
+            onclick="goHome()"
         >
+            Axora
+        </div>
 
-            <h2 class="section-title">
-                Games
-            </h2>
+        <div class="tagline">
+            Create. Play. Explore.
+        </div>
 
-            <p class="section-subtitle">
-                Experiences available on Axora.
-            </p>
+    </div>
 
-            <div class="games-grid">
-
-                <div class="game-card">
-
-                    <div class="game-icon">
-                        <i class="fa-solid fa-cube"></i>
-                    </div>
-
-                    <h3>
-                        Simple Game
-                    </h3>
-
-                    <p>
-                        A classic blocky 3D sandbox
-                        built with custom WebGL shaders.
-                    </p>
-
-                    <button onclick="launchSimpleGame()">
-                        Play
-                    </button>
-
-                </div>
-
-            </div>
-
-        </section>
-
-    </main>
-
-
-    <!-- ================= GAME OVERLAY ================= -->
-
-    <div id="gameOverlay">
-
-        <canvas id="gameCanvas"></canvas>
+    <div class="nav-right">
 
         <button
-            id="closeGameButton"
-            onclick="closeGame()"
+            class="nav-button"
+            onclick="scrollToGames()"
         >
-            <i class="fa-solid fa-xmark"></i>
-            Close Game
+            Games
+        </button>
+
+        <button
+            id="axbuxButton"
+            class="nav-button"
+            onclick="goAxBux()"
+        >
+            <i class="fa-solid fa-coins"></i>
+            AxBux
+        </button>
+
+        <!-- Logged-out account button -->
+
+        <button
+            id="accountButton"
+            class="nav-button primary"
+            onclick="accountAction()"
+        >
+            <i class="fa-solid fa-right-to-bracket"></i>
+            Login
+        </button>
+
+        <!-- Logged-in profile -->
+
+        <div
+            id="accountProfile"
+            class="account-profile"
+            onclick="openAccount()"
+        >
+
+            <div
+                id="accountAvatar"
+                class="account-avatar"
+            >
+                A
+            </div>
+
+            <div
+                id="accountName"
+                class="account-name"
+            >
+                Account
+            </div>
+
+        </div>
+
+        <button
+            id="logoutButton"
+            class="nav-button"
+            onclick="logout()"
+            style="display: none;"
+        >
+            Logout
         </button>
 
     </div>
 
-
-    <!-- ================= FOOTER ================= -->
-
-    <footer>
-        © 2026 Rip_Dead Studios · Axora
-    </footer>
+</nav>
 
 
-    <script>
+<!-- ================= HERO ================= -->
 
-        /* =========================================================
-           AXORA ACCOUNT / OAUTH
-           ========================================================= */
+<main>
 
-        const ACCOUNT_AUTHORIZE_URL =
-            "https://account.ripdead.de5.net/authorize/";
+    <section class="hero">
 
-        const AXORA_CLIENT_ID =
-            "axora";
+        <div class="hero-content">
 
-        /*
-         * IMPORTANT:
-         * This MUST exactly match the redirect URI registered
-         * for the Axora OAuth app in Rip_Dead Account.
-         */
-        const AXORA_REDIRECT_URI =
-            "https://playaxora.ripdead.dedyn.io/callback";
+            <h1>
+                Welcome to Axora
+            </h1>
 
-        const AXORA_SCOPE =
-            "profile";
+            <p>
+                A browser-based world powered by the
+                Rip_Dead Engine.
+                Create, play, and explore experiences
+                directly from your browser.
+            </p>
 
-        const AXORA_SESSION_KEY =
-            "axora_session_token";
+            <div class="hero-buttons">
 
-        const AXORA_USER_ID_KEY =
-            "axora_user_id";
+                <button
+                    class="hero-button primary"
+                    onclick="scrollToGames()"
+                >
+                    <i class="fa-solid fa-gamepad"></i>
+                    Explore Games
+                </button>
 
-        const AXORA_EXPIRES_KEY =
-            "axora_session_expires_at";
+                <button
+                    id="heroAccountButton"
+                    class="hero-button secondary"
+                    onclick="accountAction()"
+                >
+                    <i class="fa-solid fa-user"></i>
+                    Login
+                </button>
 
-        const AXORA_STATE_KEY =
-            "axora_oauth_state";
+            </div>
 
-        const AXORA_SCOPES_KEY =
-            "axora_scopes";
+        </div>
+
+    </section>
 
 
-        /* =========================================================
-           SESSION
-           ========================================================= */
+    <!-- ================= GAMES ================= -->
 
-        function getSessionToken() {
+    <section
+        id="games"
+        class="section"
+    >
 
-            return sessionStorage.getItem(
-                AXORA_SESSION_KEY
-            );
+        <h2 class="section-title">
+            Games
+        </h2>
+
+        <p class="section-subtitle">
+            Experiences available on Axora.
+        </p>
+
+        <div class="games-grid">
+
+            <div class="game-card">
+
+                <div class="game-icon">
+                    <i class="fa-solid fa-cube"></i>
+                </div>
+
+                <h3>
+                    Simple Game
+                </h3>
+
+                <p>
+                    A classic blocky 3D sandbox
+                    built with custom WebGL shaders.
+                </p>
+
+                <button
+                    onclick="launchSimpleGame()"
+                >
+                    Play
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<!-- ================= GAME OVERLAY ================= -->
+
+<div id="gameOverlay">
+
+    <canvas id="gameCanvas"></canvas>
+
+    <button
+        id="closeGameButton"
+        onclick="closeGame()"
+    >
+        <i class="fa-solid fa-xmark"></i>
+        Close Game
+    </button>
+
+</div>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+    © 2026 Rip_Dead Studios · Axora
+</footer>
+
+
+<!--
+    IMPORTANT:
+
+    Load webgl.js ONCE.
+
+    It is loaded before the Axora application script,
+    so launchSimpleGame() can use initAxoraEngine()
+    without dynamically inserting another script.
+-->
+
+<script src="/webgl.js"></script>
+
+
+<script>
+    /* =========================================================
+       AXORA ACCOUNT / OAUTH
+       ========================================================= */
+
+    const ACCOUNT_AUTHORIZE_URL =
+        "https://account.ripdead.de5.net/authorize/";
+
+    const AXORA_CLIENT_ID =
+        "axora";
+
+    const AXORA_REDIRECT_URI =
+        "https://playaxora.ripdead.dedyn.io/callback";
+
+    const AXORA_SCOPE =
+        "profile";
+
+
+    /* =========================================================
+       AXORA SESSION
+       ========================================================= */
+
+    const AXORA_SESSION_KEY =
+        "axora_session_token";
+
+    const AXORA_USER_ID_KEY =
+        "axora_user_id";
+
+    const AXORA_EXPIRES_KEY =
+        "axora_session_expires_at";
+
+    const AXORA_STATE_KEY =
+        "axora_oauth_state";
+
+    const AXORA_SCOPES_KEY =
+        "axora_scopes";
+
+
+    /* =========================================================
+       EXISTING RIP_DEAD SITE SESSION FUNCTION
+       ========================================================= */
+
+    const SITE_SESSION_FUNCTION =
+        "https://vcwfgyikbvfzgqiljmry.supabase.co/functions/v1/site-session";
+
+
+    /* =========================================================
+       PROFILE
+       ========================================================= */
+
+    let axoraProfile = null;
+
+
+    /* =========================================================
+       SESSION HELPERS
+       ========================================================= */
+
+    function getSessionToken() {
+
+        return sessionStorage.getItem(
+            AXORA_SESSION_KEY
+        );
+    }
+
+
+    function isLoggedIn() {
+
+        const token =
+            getSessionToken();
+
+        if (!token) {
+            return false;
         }
 
-
-        function isLoggedIn() {
-
-            const token =
-                getSessionToken();
-
-            if (!token) {
-                return false;
-            }
-
-            const expiresAt =
-                sessionStorage.getItem(
-                    AXORA_EXPIRES_KEY
-                );
-
-            if (expiresAt) {
-
-                const expiry =
-                    new Date(expiresAt).getTime();
-
-                if (
-                    Number.isFinite(expiry) &&
-                    Date.now() >= expiry
-                ) {
-
-                    clearAxoraSession();
-
-                    return false;
-                }
-            }
-
-            return true;
-        }
-
-
-        function clearAxoraSession() {
-
-            sessionStorage.removeItem(
-                AXORA_SESSION_KEY
-            );
-
-            sessionStorage.removeItem(
-                AXORA_USER_ID_KEY
-            );
-
-            sessionStorage.removeItem(
+        const expiresAt =
+            sessionStorage.getItem(
                 AXORA_EXPIRES_KEY
             );
 
-            sessionStorage.removeItem(
-                AXORA_STATE_KEY
-            );
+        if (expiresAt) {
 
-            sessionStorage.removeItem(
-                AXORA_SCOPES_KEY
-            );
-        }
+            const expiry =
+                new Date(
+                    expiresAt
+                ).getTime();
 
-
-        /* =========================================================
-           OAUTH STATE
-           ========================================================= */
-
-        function generateOAuthState() {
-
-            const bytes =
-                new Uint8Array(32);
-
-            crypto.getRandomValues(bytes);
-
-            return Array
-                .from(bytes)
-                .map(
-                    byte =>
-                        byte
-                            .toString(16)
-                            .padStart(2, "0")
-                )
-                .join("");
-        }
-
-
-        /* =========================================================
-           LOGIN / AUTHORIZE
-           ========================================================= */
-
-        function accountAction() {
-
-            /*
-             * Already logged in?
-             * Go to the Account profile instead of starting
-             * another authorization request.
-             */
-            if (isLoggedIn()) {
-
-                window.location.href =
-                    "https://account.ripdead.de5.net/account/";
-
-                return;
-            }
-
-
-            /*
-             * Generate CSRF protection state.
-             */
-            const state =
-                generateOAuthState();
-
-
-            sessionStorage.setItem(
-                AXORA_STATE_KEY,
-                state
-            );
-
-
-            /*
-             * Build the OAuth authorization request.
-             *
-             * Account handles:
-             *  - authentication
-             *  - login
-             *  - authorization UI
-             *  - Allow / Cancel
-             */
-            const params =
-                new URLSearchParams({
-
-                    client_id:
-                        AXORA_CLIENT_ID,
-
-                    redirect_uri:
-                        AXORA_REDIRECT_URI,
-
-                    response_type:
-                        "code",
-
-                    scope:
-                        AXORA_SCOPE,
-
-                    state:
-                        state
-
-                });
-
-
-            window.location.href =
-                ACCOUNT_AUTHORIZE_URL +
-                "?" +
-                params.toString();
-        }
-
-
-        /* =========================================================
-           LOGOUT
-           ========================================================= */
-
-        function logout() {
-
-            clearAxoraSession();
-
-            updateUI();
-
-            window.scrollTo({
-                top: 0,
-                behavior: "smooth"
-            });
-        }
-
-
-        /* =========================================================
-           UI
-           ========================================================= */
-
-        function updateUI() {
-
-            const loggedIn =
-                isLoggedIn();
-
-
-            const accountButton =
-                document.getElementById(
-                    "accountButton"
-                );
-
-            const heroAccountButton =
-                document.getElementById(
-                    "heroAccountButton"
-                );
-
-            const logoutButton =
-                document.getElementById(
-                    "logoutButton"
-                );
-
-            const axbuxButton =
-                document.getElementById(
-                    "axbuxButton"
-                );
-
-
-            if (loggedIn) {
-
-                accountButton.innerHTML =
-                    '<i class="fa-solid fa-user"></i> Account';
-
-                heroAccountButton.innerHTML =
-                    '<i class="fa-solid fa-user"></i> Account';
-
-                logoutButton.style.display =
-                    "block";
-
-                axbuxButton.style.display =
-                    "block";
-
-            } else {
-
-                accountButton.innerHTML =
-                    '<i class="fa-solid fa-right-to-bracket"></i> Login';
-
-                heroAccountButton.innerHTML =
-                    '<i class="fa-solid fa-right-to-bracket"></i> Login';
-
-                logoutButton.style.display =
-                    "none";
-
-                axbuxButton.style.display =
-                    "none";
-            }
-        }
-
-
-        /* =========================================================
-           NAVIGATION
-           ========================================================= */
-
-        function goHome() {
-
-            window.location.href = "./";
-        }
-
-
-        function scrollToGames() {
-
-            const games =
-                document.getElementById(
-                    "games"
-                );
-
-            if (!games) {
-                return;
-            }
-
-            games.scrollIntoView({
-                behavior: "smooth"
-            });
-        }
-
-
-        function goAxBux() {
-
-            window.location.href =
-                "./axbux/";
-        }
-
-
-        /* =========================================================
-           SIMPLE GAME
-           ========================================================= */
-
-        function launchSimpleGame() {
-
-            const overlay =
-                document.getElementById(
-                    "gameOverlay"
-                );
-
-            overlay.style.display =
-                "block";
-
-            document.body.style.overflow =
-                "hidden";
-
-
-            /*
-             * Keep the existing WebGL engine.
-             * webgl.js initializes the Axora canvas.
-             */
             if (
-                typeof window.initAxoraEngine ===
-                "function"
+                Number.isFinite(expiry) &&
+                Date.now() >= expiry
             ) {
 
-                window.initAxoraEngine();
+                clearAxoraSession();
 
-                return;
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+
+    function clearAxoraSession() {
+
+        sessionStorage.removeItem(
+            AXORA_SESSION_KEY
+        );
+
+        sessionStorage.removeItem(
+            AXORA_USER_ID_KEY
+        );
+
+        sessionStorage.removeItem(
+            AXORA_EXPIRES_KEY
+        );
+
+        sessionStorage.removeItem(
+            AXORA_STATE_KEY
+        );
+
+        sessionStorage.removeItem(
+            AXORA_SCOPES_KEY
+        );
+
+        axoraProfile = null;
+    }
+
+
+    /* =========================================================
+       OAUTH STATE
+       ========================================================= */
+
+    function generateOAuthState() {
+
+        const bytes =
+            new Uint8Array(32);
+
+        crypto.getRandomValues(bytes);
+
+        return Array
+            .from(bytes)
+            .map(
+                byte =>
+                    byte
+                        .toString(16)
+                        .padStart(2, "0")
+            )
+            .join("");
+    }
+
+
+    /* =========================================================
+       LOGIN / AUTHORIZE
+       ========================================================= */
+
+    function accountAction() {
+
+        /*
+         * Already logged in?
+         */
+
+        if (isLoggedIn()) {
+
+            openAccount();
+
+            return;
+        }
+
+
+        /*
+         * Generate CSRF state.
+         */
+
+        const state =
+            generateOAuthState();
+
+        sessionStorage.setItem(
+            AXORA_STATE_KEY,
+            state
+        );
+
+
+        /*
+         * Build OAuth request.
+         */
+
+        const params =
+            new URLSearchParams({
+                client_id:
+                    AXORA_CLIENT_ID,
+
+                redirect_uri:
+                    AXORA_REDIRECT_URI,
+
+                response_type:
+                    "code",
+
+                scope:
+                    AXORA_SCOPE,
+
+                state:
+                    state
+            });
+
+
+        window.location.href =
+            ACCOUNT_AUTHORIZE_URL +
+            "?" +
+            params.toString();
+    }
+
+
+    function openAccount() {
+
+        window.location.href =
+            "https://account.ripdead.de5.net/account/";
+    }
+
+
+    /* =========================================================
+       LOAD PROFILE
+       ========================================================= */
+
+    async function loadAxoraProfile() {
+
+        if (!isLoggedIn()) {
+
+            axoraProfile = null;
+
+            return null;
+        }
+
+        const token =
+            getSessionToken();
+
+        if (!token) {
+
+            axoraProfile = null;
+
+            return null;
+        }
+
+
+        try {
+
+            /*
+             * Use the EXISTING Rip_Dead Site
+             * session endpoint.
+             *
+             * Axora's OAuth session token is
+             * stored in the same session table,
+             * so site-session can resolve it.
+             */
+
+            const response =
+                await fetch(
+                    SITE_SESSION_FUNCTION,
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
+
+                        body: JSON.stringify({
+                            token: token
+                        })
+                    }
+                );
+
+
+            const result =
+                await response.json();
+
+
+            if (
+                !response.ok ||
+                !result.success
+            ) {
+
+                console.error(
+                    "[Axora] Profile request failed:",
+                    result
+                );
+
+                /*
+                 * If the server says the session
+                 * is invalid/expired, clear it.
+                 */
+
+                if (
+                    response.status === 401 ||
+                    response.status === 403
+                ) {
+
+                    clearAxoraSession();
+                }
+
+                axoraProfile = null;
+
+                return null;
             }
 
 
-            const script =
-                document.createElement("script");
+            /*
+             * Save the profile.
+             */
 
-            script.src =
-                "./webgl.js";
+            axoraProfile =
+                result.profile || null;
 
-            script.onload = function () {
+
+            /*
+             * Synchronize expiration.
+             */
+
+            if (result.expires_at) {
+
+                sessionStorage.setItem(
+                    AXORA_EXPIRES_KEY,
+                    result.expires_at
+                );
+            }
+
+
+            /*
+             * Also synchronize user ID.
+             */
+
+            if (result.user_id) {
+
+                sessionStorage.setItem(
+                    AXORA_USER_ID_KEY,
+                    result.user_id
+                );
+            }
+
+
+            return axoraProfile;
+
+        } catch (error) {
+
+            console.error(
+                "[Axora] Failed to load profile:",
+                error
+            );
+
+            axoraProfile = null;
+
+            return null;
+        }
+    }
+
+
+    /* =========================================================
+       RENDER PROFILE
+       ========================================================= */
+
+    function renderProfile(profile) {
+
+        const accountButton =
+            document.getElementById(
+                "accountButton"
+            );
+
+        const heroAccountButton =
+            document.getElementById(
+                "heroAccountButton"
+            );
+
+        const accountProfile =
+            document.getElementById(
+                "accountProfile"
+            );
+
+        const accountAvatar =
+            document.getElementById(
+                "accountAvatar"
+            );
+
+        const accountName =
+            document.getElementById(
+                "accountName"
+            );
+
+        const logoutButton =
+            document.getElementById(
+                "logoutButton"
+            );
+
+        const axbuxButton =
+            document.getElementById(
+                "axbuxButton"
+            );
+
+
+        /*
+         * Logged out
+         */
+
+        if (!profile) {
+
+            accountButton.style.display =
+                "block";
+
+            accountButton.innerHTML =
+                '<i class="fa-solid fa-right-to-bracket"></i> Login';
+
+            heroAccountButton.innerHTML =
+                '<i class="fa-solid fa-right-to-bracket"></i> Login';
+
+            accountProfile.classList.remove(
+                "visible"
+            );
+
+            logoutButton.style.display =
+                "none";
+
+            axbuxButton.style.display =
+                "none";
+
+            accountAvatar.innerHTML =
+                "A";
+
+            accountName.textContent =
+                "Account";
+
+            return;
+        }
+
+
+        /*
+         * Logged in
+         */
+
+        accountButton.style.display =
+            "none";
+
+        heroAccountButton.innerHTML =
+            '<i class="fa-solid fa-user"></i> Account';
+
+        accountProfile.classList.add(
+            "visible"
+        );
+
+        logoutButton.style.display =
+            "block";
+
+        axbuxButton.style.display =
+            "block";
+
+
+        /*
+         * Display name fallback:
+         *
+         * display_name
+         * → username
+         * → Rip_Dead Account
+         */
+
+        const displayName =
+            profile.display_name ||
+            profile.username ||
+            "Rip_Dead Account";
+
+
+        /*
+         * Clear current name.
+         */
+
+        accountName.innerHTML =
+            "";
+
+
+        /*
+         * Add display name.
+         */
+
+        accountName.appendChild(
+            document.createTextNode(
+                displayName
+            )
+        );
+
+
+        /*
+         * Verification badge.
+         */
+
+        if (
+            profile.is_verified === true
+        ) {
+
+            const badge =
+                document.createElement(
+                    "span"
+                );
+
+            badge.className =
+                "verification-badge";
+
+            badge.textContent =
+                "✓";
+
+            badge.title =
+                "Verified Rip_Dead Account";
+
+            accountName.appendChild(
+                badge
+            );
+        }
+
+
+        /*
+         * Profile picture.
+         */
+
+        accountAvatar.innerHTML =
+            "";
+
+
+        if (profile.avatar_url) {
+
+            const image =
+                document.createElement(
+                    "img"
+                );
+
+            image.src =
+                profile.avatar_url;
+
+            image.alt =
+                displayName;
+
+            image.onerror =
+                function () {
+
+                    accountAvatar.innerHTML =
+                        displayName
+                            .charAt(0)
+                            .toUpperCase();
+                };
+
+            accountAvatar.appendChild(
+                image
+            );
+
+        } else {
+
+            accountAvatar.textContent =
+                displayName
+                    .charAt(0)
+                    .toUpperCase();
+        }
+    }
+
+
+    /* =========================================================
+       UI
+       ========================================================= */
+
+    async function updateUI() {
+
+        /*
+         * No session.
+         */
+
+        if (!isLoggedIn()) {
+
+            renderProfile(null);
+
+            return;
+        }
+
+
+        /*
+         * Load actual profile.
+         */
+
+        const profile =
+            await loadAxoraProfile();
+
+
+        renderProfile(profile);
+    }
+
+
+    /* =========================================================
+       LOGOUT
+       ========================================================= */
+
+    function logout() {
+
+        clearAxoraSession();
+
+        renderProfile(null);
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+    }
+
+
+    /* =========================================================
+       NAVIGATION
+       ========================================================= */
+
+    function goHome() {
+
+        window.location.href =
+            "/";
+    }
+
+
+    function scrollToGames() {
+
+        const games =
+            document.getElementById(
+                "games"
+            );
+
+        if (!games) {
+            return;
+        }
+
+        games.scrollIntoView({
+            behavior: "smooth"
+        });
+    }
+
+
+    function goAxBux() {
+
+        window.location.href =
+            "/axbux/";
+    }
+
+
+    /* =========================================================
+       SIMPLE GAME
+       ========================================================= */
+
+    function launchSimpleGame() {
+
+        const overlay =
+            document.getElementById(
+                "gameOverlay"
+            );
+
+        const canvas =
+            document.getElementById(
+                "gameCanvas"
+            );
+
+
+        /*
+         * Show the WebGL overlay first.
+         *
+         * This is important because WebGL code that
+         * reads canvas dimensions while display:none
+         * can get a 0x0 canvas.
+         */
+
+        overlay.style.display =
+            "block";
+
+        document.body.style.overflow =
+            "hidden";
+
+
+        /*
+         * Give the browser one frame to lay out
+         * the visible canvas before initializing
+         * the engine.
+         */
+
+        requestAnimationFrame(
+            function () {
+
+                /*
+                 * Make absolutely sure the canvas
+                 * exists before starting WebGL.
+                 */
+
+                if (!canvas) {
+
+                    console.error(
+                        "[Axora] gameCanvas was not found."
+                    );
+
+                    return;
+                }
+
+
+                /*
+                 * webgl.js is already loaded at the
+                 * bottom of the document.
+                 */
 
                 if (
                     typeof window.initAxoraEngine ===
@@ -1069,37 +1660,61 @@
                 ) {
 
                     window.initAxoraEngine();
+
+                    return;
                 }
-            };
-
-            document.body.appendChild(script);
-        }
 
 
-        function closeGame() {
-
-            const overlay =
-                document.getElementById(
-                    "gameOverlay"
+                console.error(
+                    "[Axora] initAxoraEngine() was not found in webgl.js."
                 );
+            }
+        );
+    }
 
-            overlay.style.display =
-                "none";
 
-            document.body.style.overflow =
-                "";
+    /* =========================================================
+       CLOSE GAME
+       ========================================================= */
 
-            window.location.reload();
+    function closeGame() {
+
+        const overlay =
+            document.getElementById(
+                "gameOverlay"
+            );
+
+        overlay.style.display =
+            "none";
+
+        document.body.style.overflow =
+            "";
+
+
+        /*
+         * Reloading resets the WebGL state completely.
+         * This keeps the current engine behavior simple.
+         */
+
+        window.location.reload();
+    }
+
+
+    /* =========================================================
+       STARTUP
+       ========================================================= */
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        function () {
+
+            updateUI();
+
         }
-
-
-        /* =========================================================
-           STARTUP
-           ========================================================= */
-
-        updateUI();
-
-    </script>
+    );
+</script>
+```
 
 </body>
+
 </html>
