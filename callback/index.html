@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>Axora — Authentication</title>
+
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    html,
+    body {
+        margin: 0;
+        padding: 0;
+        min-height: 100%;
+    }
+
+    body {
+        min-height: 100vh;
+
+        background:
+            radial-gradient(
+                circle at 15% 20%,
+                rgba(125, 70, 255, 0.24),
+                transparent 35%
+            ),
+            radial-gradient(
+                circle at 85% 75%,
+                rgba(0, 220, 255, 0.15),
+                transparent 35%
+            ),
+            radial-gradient(
+                circle at 50% 100%,
+                rgba(90, 40, 255, 0.12),
+                transparent 40%
+            ),
+            #05050b;
+
+        color: #ffffff;
+
+        font-family:
+            Inter,
+            system-ui,
+            -apple-system,
+            BlinkMacSystemFont,
+            "Segoe UI",
+            sans-serif;
+
+        overflow-x: hidden;
+    }
+
+    body::before {
+        content: "";
+
+        position: fixed;
+        inset: 0;
+
+        background:
+            linear-gradient(
+                135deg,
+                rgba(255,255,255,0.025),
+                transparent 40%
+            );
+
+        pointer-events: none;
+        z-index: 0;
+    }
+
+    body::after {
+        content: "";
+
+        position: fixed;
+        inset: 0;
+
+        background:
+            radial-gradient(
+                circle at center,
+                transparent 0%,
+                rgba(0,0,0,0.18) 70%,
+                rgba(0,0,0,0.4) 100%
+            );
+
+        pointer-events: none;
+        z-index: 0;
+    }
+
+    /* =========================
+       ANIMATIONS
+    ========================= */
+
+    .void-enter {
+        animation:
+            voidEnter
+            0.7s
+            ease
+            both;
+    }
+
+    .void-exit {
+        animation:
+            voidExit
+            0.5s
+            ease
+            both;
+    }
+
+    @keyframes voidEnter {
+        from {
+            opacity: 0;
+            transform: translateY(35px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes voidExit {
+        from {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        to {
+            opacity: 0;
+            transform: translateY(35px);
+        }
+    }
+
+    @keyframes spin {
+        to {
+            transform: rotate(360deg);
+        }
+    }
+
+    @keyframes pulse {
+        0%,
+        100% {
+            opacity: 0.65;
+            transform: scale(1);
+        }
+
+        50% {
+            opacity: 1;
+            transform: scale(1.05);
+        }
+    }
+
+    /* =========================
+       MAIN
+    ========================= */
+
+    .main {
+        position: relative;
+        z-index: 1;
+
+        min-height: 100vh;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        padding:
+            120px
+            20px
+            100px;
+    }
+
+    .card {
+        position: relative;
+
+        width: 100%;
+        max-width: 620px;
+
+        padding: 44px;
+
+        border:
+            1px solid
+            rgba(255,255,255,0.09);
+
+        border-radius: 28px;
+
+        background:
+            linear-gradient(
+                145deg,
+                rgba(20,20,35,0.84),
+                rgba(7,7,15,0.80)
+            );
+
+        backdrop-filter: blur(24px);
+        -webkit-backdrop-filter: blur(24px);
+
+        box-shadow:
+            0 30px 90px
+            rgba(0,0,0,0.45),
+
+            0 0 80px
+            rgba(100,60,255,0.08);
+
+        text-align: center;
+
+        overflow: hidden;
+    }
+
+    .card::before {
+        content: "";
+
+        position: absolute;
+
+        top: 0;
+        left: 15%;
+        right: 15%;
+
+        height: 1px;
+
+        background:
+            linear-gradient(
+                90deg,
+                transparent,
+                rgba(150,100,255,0.65),
+                rgba(0,220,255,0.5),
+                transparent
+            );
+    }
+
+    .card::after {
+        content: "";
+
+        position: absolute;
+
+        width: 260px;
+        height: 260px;
+
+        top: -160px;
+        right: -120px;
+
+        border-radius: 50%;
+
+        background:
+            radial-gradient(
+                circle,
+                rgba(120,70,255,0.16),
+                transparent 70%
+            );
+
+        pointer-events: none;
+    }
+
+    /* =========================
+       ICON
+    ========================= */
+
+    .icon {
+        width: 78px;
+        height: 78px;
+
+        margin:
+            0
+            auto
+            22px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        border-radius: 22px;
+
+        background:
+            linear-gradient(
+                135deg,
+                rgba(125,70,255,0.32),
+                rgba(0,210,255,0.18)
+            );
+
+        border:
+            1px solid
+            rgba(255,255,255,0.10);
+
+        box-shadow:
+            0 0 35px
+            rgba(110,70,255,0.12);
+
+        font-size: 34px;
+
+        animation:
+            pulse
+            3s
+            ease-in-out
+            infinite;
+    }
+
+    /* =========================
+       TEXT
+    ========================= */
+
+    h1 {
+        margin:
+            0
+            0
+            10px;
+
+        font-size: 32px;
+
+        letter-spacing: -0.045em;
+    }
+
+    .description {
+        margin:
+            0
+            auto
+            30px;
+
+        max-width: 460px;
+
+        color:
+            rgba(255,255,255,0.62);
+
+        line-height: 1.6;
+    }
+
+    /* =========================
+       STATUS
+    ========================= */
+
+    .status {
+        min-height: 62px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        margin-bottom: 20px;
+
+        color:
+            rgba(255,255,255,0.78);
+
+        line-height: 1.5;
+
+        font-size: 14px;
+    }
+
+    .status.success {
+        color: #8dffbe;
+    }
+
+    .status.error {
+        color: #ff8d9b;
+    }
+
+    .spinner {
+        width: 26px;
+        height: 26px;
+
+        margin-right: 12px;
+
+        flex-shrink: 0;
+
+        border:
+            3px solid
+            rgba(255,255,255,0.12);
+
+        border-top-color:
+            #ffffff;
+
+        border-radius: 50%;
+
+        animation:
+            spin
+            0.8s
+            linear
+            infinite;
+    }
+
+    /* =========================
+       BUTTON
+    ========================= */
+
+    .button {
+        display: inline-flex;
+
+        align-items: center;
+        justify-content: center;
+
+        min-height: 46px;
+
+        padding:
+            0
+            22px;
+
+        border-radius: 14px;
+
+        border:
+            1px solid
+            rgba(255,255,255,0.10);
+
+        background:
+            linear-gradient(
+                135deg,
+                rgba(125,70,255,0.22),
+                rgba(0,210,255,0.10)
+            );
+
+        color: #ffffff;
+
+        cursor: pointer;
+
+        font-size: 14px;
+        font-weight: 700;
+
+        transition:
+            transform 0.2s ease,
+            background 0.2s ease,
+            border-color 0.2s ease,
+            box-shadow 0.2s ease;
+    }
+
+    .button:hover {
+        transform: translateY(-2px);
+
+        background:
+            linear-gradient(
+                135deg,
+                rgba(125,70,255,0.32),
+                rgba(0,210,255,0.16)
+            );
+
+        border-color:
+            rgba(255,255,255,0.18);
+
+        box-shadow:
+            0 10px 30px
+            rgba(80,50,255,0.16);
+    }
+
+    .button:active {
+        transform: translateY(0);
+    }
+
+    .button.hidden {
+        display: none;
+    }
+
+    /* =========================
+       FOOTER
+    ========================= */
+
+    footer {
+        position: fixed;
+
+        bottom: 18px;
+        left: 0;
+        right: 0;
+
+        z-index: 10;
+
+        text-align: center;
+
+        color:
+            rgba(255,255,255,0.35);
+
+        font-size: 12px;
+
+        pointer-events: none;
+    }
+
+    /* =========================
+       MOBILE
+    ========================= */
+
+    @media (max-width: 800px) {
+
+        .main {
+            padding:
+                100px
+                14px
+                80px;
+        }
+
+        .card {
+            padding:
+                32px
+                22px;
+
+            border-radius: 24px;
+        }
+
+        h1 {
+            font-size: 28px;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+
+        .void-enter,
+        .void-exit,
+        .icon {
+            animation: none;
+        }
+    }
+</style>
+
+</head>
+
+<body>
+
+<!-- =========================
+     MAIN
+========================= -->
+
+<main class="main">
+
+    <section class="card void-enter">
+
+        <div class="icon">
+            🔐
+        </div>
+
+        <h1>
+            Axora
+        </h1>
+
+        <p
+            class="description"
+            id="description"
+        >
+            Connecting your Rip_Dead Account...
+        </p>
+
+        <div
+            class="status"
+            id="status"
+        >
+
+            <div class="spinner"></div>
+
+            <span>
+                Authenticating...
+            </span>
+
+        </div>
+
+        <button
+            class="button hidden"
+            id="returnButton"
+            type="button"
+        >
+            Return to Axora
+        </button>
+
+    </section>
+
+</main>
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer>
+    © 2026 Rip_Dead Studios™ — Axora
+</footer>
+
+
+<script>
+
+    /* =========================================================
+       AXORA OAUTH CONFIG
+       ========================================================= */
+
+    const OAUTH_EXCHANGE_URL =
+        "https://vcwfgyikbvfzgqiljmry.supabase.co/functions/v1/oauth-exchange";
+
+    const CLIENT_ID =
+        "axora";
+
+    /*
+     * This must exactly match the redirect URI registered
+     * for the Axora OAuth application.
+     */
+    const REDIRECT_URI =
+        "https://playaxora.ripdead.dedyn.io/callback";
+
+
+    /* =========================================================
+       AXORA SESSION KEYS
+       ========================================================= */
+
+    const AXORA_SESSION_KEY =
+        "axora_session_token";
+
+    const AXORA_USER_ID_KEY =
+        "axora_user_id";
+
+    const AXORA_EXPIRES_KEY =
+        "axora_session_expires_at";
+
+    const AXORA_STATE_KEY =
+        "axora_oauth_state";
+
+    const AXORA_SCOPES_KEY =
+        "axora_scopes";
+
+
+    /* =========================================================
+       ELEMENTS
+       ========================================================= */
+
+    const statusElement =
+        document.getElementById(
+            "status"
+        );
+
+    const descriptionElement =
+        document.getElementById(
+            "description"
+        );
+
+    const returnButton =
+        document.getElementById(
+            "returnButton"
+        );
+
+
+    /* =========================================================
+       STATUS
+       ========================================================= */
+
+    function showStatus(
+        message,
+        type = ""
+    ) {
+
+        statusElement.className =
+            "status";
+
+        if (type) {
+
+            statusElement.classList.add(
+                type
+            );
+        }
+
+        statusElement.innerHTML = "";
+
+        const text =
+            document.createElement(
+                "span"
+            );
+
+        text.textContent =
+            message;
+
+        statusElement.appendChild(
+            text
+        );
+    }
+
+
+    function showLoading(
+        message
+    ) {
+
+        statusElement.className =
+            "status";
+
+        statusElement.innerHTML = `
+            <div class="spinner"></div>
+            <span></span>
+        `;
+
+        statusElement
+            .querySelector("span")
+            .textContent =
+                message;
+    }
+
+
+    function showReturnButton() {
+
+        returnButton.classList.remove(
+            "hidden"
+        );
+    }
+
+
+    /* =========================================================
+       RETURN TO AXORA
+       ========================================================= */
+
+    function goHome() {
+
+        document.body.classList.add(
+            "void-exit"
+        );
+
+        setTimeout(() => {
+
+            window.location.href =
+                "https://playaxora.ripdead.dedyn.io/";
+
+        }, 450);
+    }
+
+
+    returnButton.addEventListener(
+        "click",
+        goHome
+    );
+
+
+    /* =========================================================
+       OAUTH CALLBACK
+       ========================================================= */
+
+    async function handleCallback() {
+
+        const params =
+            new URLSearchParams(
+                window.location.search
+            );
+
+
+        const code =
+            params.get("code");
+
+        const state =
+            params.get("state");
+
+        const error =
+            params.get("error");
+
+        const errorDescription =
+            params.get(
+                "error_description"
+            );
+
+
+        /*
+         * Account denied the authorization request.
+         */
+
+        if (error) {
+
+            showStatus(
+                errorDescription ||
+                "Authorization was denied.",
+                "error"
+            );
+
+            descriptionElement.textContent =
+                "The Axora authorization was not completed.";
+
+            showReturnButton();
+
+            return;
+        }
+
+
+        /*
+         * No authorization code.
+         */
+
+        if (!code) {
+
+            showStatus(
+                "No authorization code was provided.",
+                "error"
+            );
+
+            descriptionElement.textContent =
+                "This authentication request is missing the required OAuth code.";
+
+            showReturnButton();
+
+            return;
+        }
+
+
+        /*
+         * Validate the state generated by Axora
+         * before exchanging the authorization code.
+         */
+
+        const expectedState =
+            sessionStorage.getItem(
+                AXORA_STATE_KEY
+            );
+
+
+        if (
+            !state ||
+            !expectedState ||
+            state !== expectedState
+        ) {
+
+            showStatus(
+                "Invalid OAuth state.",
+                "error"
+            );
+
+            descriptionElement.textContent =
+                "The authorization response could not be verified. Please start the login process again.";
+
+            showReturnButton();
+
+            return;
+        }
+
+
+        showLoading(
+            "Exchanging authorization code..."
+        );
+
+
+        try {
+
+            /*
+             * This matches the actual oauth-exchange
+             * Edge Function request body:
+             *
+             * {
+             *     code,
+             *     client_id,
+             *     redirect_uri,
+             *     state
+             * }
+             */
+
+            const response =
+                await fetch(
+                    OAUTH_EXCHANGE_URL,
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
+
+                        body:
+                            JSON.stringify({
+
+                                code:
+                                    code,
+
+                                client_id:
+                                    CLIENT_ID,
+
+                                redirect_uri:
+                                    REDIRECT_URI,
+
+                                state:
+                                    state
+
+                            })
+                    }
+                );
+
+
+            let result;
+
+            try {
+
+                result =
+                    await response.json();
+
+            } catch {
+
+                result = null;
+
+            }
+
+
+            /*
+             * The exchange failed.
+             */
+
+            if (
+                !response.ok ||
+                !result ||
+                !result.success
+            ) {
+
+                throw new Error(
+                    result?.error ||
+                    result?.message ||
+                    "Authentication exchange failed."
+                );
+
+            }
+
+
+            /*
+             * Your Edge Function returns:
+             *
+             * session_token
+             *
+             * NOT a Supabase access token.
+             */
+
+            if (
+                !result.session_token
+            ) {
+
+                throw new Error(
+                    "The authentication server did not return an Axora session."
+                );
+
+            }
+
+
+            /*
+             * Store the Axora-specific session.
+             */
+
+            sessionStorage.setItem(
+                AXORA_SESSION_KEY,
+                result.session_token
+            );
+
+
+            /*
+             * Store the authenticated user ID.
+             */
+
+            if (
+                result.user_id
+            ) {
+
+                sessionStorage.setItem(
+                    AXORA_USER_ID_KEY,
+                    result.user_id
+                );
+
+            }
+
+
+            /*
+             * Store session expiration.
+             */
+
+            if (
+                result.expires_at
+            ) {
+
+                sessionStorage.setItem(
+                    AXORA_EXPIRES_KEY,
+                    result.expires_at
+                );
+
+            }
+
+
+            /*
+             * Store granted OAuth scopes.
+             */
+
+            if (
+                Array.isArray(
+                    result.scopes
+                )
+            ) {
+
+                sessionStorage.setItem(
+                    AXORA_SCOPES_KEY,
+                    JSON.stringify(
+                        result.scopes
+                    )
+                );
+
+            }
+
+
+            /*
+             * OAuth state is no longer needed.
+             */
+
+            sessionStorage.removeItem(
+                AXORA_STATE_KEY
+            );
+
+
+            /*
+             * Remove ?code=...&state=...
+             * from the visible browser URL.
+             */
+
+            window.history.replaceState(
+                {},
+                document.title,
+                "/callback"
+            );
+
+
+            /*
+             * Success!
+             */
+
+            showStatus(
+                "Authentication successful!",
+                "success"
+            );
+
+            descriptionElement.textContent =
+                "Your Rip_Dead Account is now connected to Axora.";
+
+
+            /*
+             * Return to Axora.
+             */
+
+            setTimeout(() => {
+
+                goHome();
+
+            }, 900);
+
+
+        } catch (error) {
+
+            console.error(
+                "[Axora OAuth Callback]",
+                error
+            );
+
+
+            /*
+             * Do not leave a broken session behind.
+             */
+
+            sessionStorage.removeItem(
+                AXORA_SESSION_KEY
+            );
+
+            sessionStorage.removeItem(
+                AXORA_USER_ID_KEY
+            );
+
+            sessionStorage.removeItem(
+                AXORA_EXPIRES_KEY
+            );
+
+            sessionStorage.removeItem(
+                AXORA_SCOPES_KEY
+            );
+
+
+            showStatus(
+                error.message ||
+                "Authentication failed.",
+                "error"
+            );
+
+
+            descriptionElement.textContent =
+                "We couldn't complete the Axora sign-in.";
+
+
+            showReturnButton();
+
+        }
+
+    }
+
+
+    /* =========================================================
+       START
+       ========================================================= */
+
+    handleCallback();
+
+</script>
+
+</body>
+</html>
