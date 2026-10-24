@@ -5,7 +5,7 @@ const AXORA_CLIENT_ID =
     "axora";
 
 const AXORA_REDIRECT_URI =
-    "https://playaxora.ripdead.dedyn.io/callback/";
+    "https://axora.ripdead.de5.net/callback/";
 
 const AXORA_SESSION_KEY =
     "axora_session_token";
